@@ -33,7 +33,6 @@ public class TalkGPT {
                 tasks = deleteTask(tasks, taskId);
             } else if(request.isEmpty()) {
                 System.out.println("Your command cannot be empty :(");
-                continue;
             } else { //add task
                 Task newTask;
                 if (requestArray[0].equals("todo")) {
