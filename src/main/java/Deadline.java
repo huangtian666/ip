@@ -32,7 +32,7 @@ class Deadline extends Task{
     @Override
     public String toString(){
         String icon = super.getStatus() ? "X" : " ";
-        return super.getId() + ". [D] [" + icon +"] " + super.getDescription() + " (by: " + this.end + ")";
+        return "[D] [" + icon +"] " + super.getDescription() + " (by: " + this.end + ")";
     }
 
 

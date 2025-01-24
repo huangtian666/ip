@@ -34,6 +34,6 @@ abstract class Task {
 
     public String toString() {
         String icon = isDone ? "X" : " ";
-        return this.id + ". [ ] [" + icon +"] " + this.description;
+        return "[ ] [" + icon +"] " + this.description;
     }
 }

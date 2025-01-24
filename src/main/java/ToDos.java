@@ -27,6 +27,6 @@ class ToDos extends Task{
     @Override
     public String toString(){
         String icon = super.getStatus() ? "X" : " ";
-        return super.getId() + ". [T] [" + icon +"] " + super.getDescription();
+        return "[T] [" + icon +"] " + super.getDescription();
     }
 }

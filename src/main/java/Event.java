@@ -38,7 +38,7 @@ class Event extends Task{
     @Override
     public String toString(){
         String icon = super.getStatus() ? "X" : " ";
-        return super.getId() + ". [E] [" + icon +"] " + super.getDescription()
+        return "[E] [" + icon +"] " + super.getDescription()
                 + " (from: " + this.start + " to: " + this.end + ")";
     }
 }
