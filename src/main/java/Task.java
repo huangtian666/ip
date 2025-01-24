@@ -24,13 +24,17 @@ abstract class Task {
         return this.description;
     }
 
-    abstract String getStart();
-    abstract String getEnd();
-    abstract Task toggleStatus(Task task);
-
     boolean getStatus() {
         return this.isDone;
     }
+
+    void setId(int id) {
+        this.id = id;
+    }
+
+    abstract String getStart();
+    abstract String getEnd();
+    abstract Task toggleStatus(Task task);
 
     public String toString() {
         String icon = isDone ? "X" : " ";

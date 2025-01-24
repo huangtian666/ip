@@ -84,6 +84,9 @@ public class TalkGPT {
             System.out.println("Your task has been deleted :)");
             System.out.println(tasks.get(taskId - INDEX_OFFSET));
             tasks.remove(taskId - INDEX_OFFSET);
+            for (int i = taskId - INDEX_OFFSET; i < tasks.size(); i++) {
+                tasks.get(i).setId(i + 1);
+            }
             System.out.printf("You have %s tasks in your ToDo List now!%n", tasks.size());
         }
         return tasks;
