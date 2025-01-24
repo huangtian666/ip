@@ -12,8 +12,21 @@ class Deadline extends Task{
         this.end = end;
     }
 
+    String getStart() { return "";}
+
    String getEnd(){
         return this.end;
+    }
+
+    Task toggleStatus(Task task) {
+        boolean newStatus = !task.getStatus();
+        if (newStatus){
+            System.out.println("Good Job on completing your task! I've marked this task!");
+        } else {
+            System.out.println("I've unmarked your task!");
+        }
+        return new Deadline(task.getId(), task.getDescription(), newStatus, task.getEnd());
+
     }
 
     @Override

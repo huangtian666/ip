@@ -1,4 +1,4 @@
-class Task {
+abstract class Task {
 
     private String description;
     private int id;
@@ -24,12 +24,16 @@ class Task {
         return this.description;
     }
 
+    abstract String getStart();
+    abstract String getEnd();
+    abstract Task toggleStatus(Task task);
+
     boolean getStatus() {
         return this.isDone;
     }
 
     public String toString() {
         String icon = isDone ? "X" : " ";
-        return this.id + ". [T] [" + icon +"] " + this.description;
+        return this.id + ". [ ] [" + icon +"] " + this.description;
     }
 }

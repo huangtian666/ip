@@ -28,22 +28,29 @@ public class TalkGPT {
             } else if (request.equals("bye")) {
                 break;
             } else if (requestArray[0].equals("mark") || requestArray[0].equals("unmark")) {
-                boolean newStatus;
-                if (requestArray[0].equals("mark")) {
-                    System.out.println("Good Job on completing your task! I've marked this task!");
-                    newStatus = true;
-                } else {
-                    System.out.println("I've unmarked your task!");
-                    newStatus = false;
-                }
                 int taskId = Integer.parseInt(requestArray[1]);
-                Task updatedTask = new Task(taskId,
-                        tasks.get(taskId - INDEX_OFFSET).getDescription(), newStatus);
+                Task oldTask = tasks.get(taskId - INDEX_OFFSET);
+                Task updatedTask = oldTask.toggleStatus(oldTask);
                 tasks.set(taskId - INDEX_OFFSET, updatedTask);
                 System.out.println(updatedTask);
             } else {
-                tasks.add(new Task(tasks.size() + INDEX_OFFSET, request));
-                System.out.println("added: " +  request);
+                Task newTask;
+                if (requestArray[0].equals("todo")) {
+                    newTask = new ToDos(tasks.size() + INDEX_OFFSET, request.substring(5));
+                    //tasks.add(newTask);
+                } else if (requestArray[0].equals("deadline")) {
+                    String[] requestBreakDown = request.split(" /by ");
+                    String description = requestBreakDown[0].substring(9);
+                    newTask = new Deadline(tasks.size() + INDEX_OFFSET, description, requestBreakDown[1]);
+                    //tasks.add(newTask);
+                } else{
+                    String[] duration = request.split(" /from ");
+                    String description = duration[0].substring(6);
+                    duration = duration[1].split(" /to ");
+                    newTask = new Event(tasks.size() + INDEX_OFFSET, description, duration[0], duration[1]);
+                }
+                tasks.add(newTask);
+                System.out.println(newTask);
             }
         }
 
