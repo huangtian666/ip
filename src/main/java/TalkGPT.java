@@ -29,14 +29,25 @@ public class TalkGPT {
                 tasks.set(taskId - INDEX_OFFSET, updatedTask);
                 System.out.println(updatedTask);
             } else if (requestArray[0].equals("delete")) {
+                if (requestArray.length < 2) {
+                    System.out.println("Please enter a task index");
+                    continue;
+                }
                 int taskId = Integer.parseInt(requestArray[1]);
                 tasks = deleteTask(tasks, taskId);
             } else if(request.isEmpty()) {
                 System.out.println("Your command cannot be empty :(");
+            } else if (request.equals("help")) {
+                printHelp();
             } else { //add task
                 Task newTask;
                 if (requestArray[0].equals("todo")) {
-                    newTask = new ToDos(tasks.size() + INDEX_OFFSET, request.substring(5));
+                    if (requestArray.length < 2) {
+                        System.out.println("Please enter a task name/description");
+                        continue;
+                    }
+                    String description = request.substring(5);
+                    newTask = new ToDos(tasks.size() + INDEX_OFFSET, description);
                 } else if (requestArray[0].equals("deadline")) {
                     if (!request.contains(" /by ")) {
                         System.out.println("Sorry, the format you entered is invalid. Please use: deadline <description> /by <date>");
@@ -46,7 +57,6 @@ public class TalkGPT {
                         String description = requestBreakDown[0].substring(9);
                         newTask = new Deadline(tasks.size() + INDEX_OFFSET, description, requestBreakDown[1]);
                     }
-                    //need to check if the task if valid
                 } else{
                     if (!request.contains(" /from ") || !request.contains(" /to ")) {
                         System.out.println("Sorry, the format you entered is invalid. " +
@@ -59,8 +69,10 @@ public class TalkGPT {
                         newTask = new Event(tasks.size() + INDEX_OFFSET, description, duration[0], duration[1]);
                     }
                 }
-                tasks.add(newTask);
-                System.out.println(newTask);
+                if (newTask.isValid()) {
+                    tasks.add(newTask);
+                    System.out.println(newTask);
+                }
             }
         }
     }
@@ -89,5 +101,18 @@ public class TalkGPT {
             System.out.printf("You have %s tasks in your ToDo List now!%n", tasks.size());
         }
         return tasks;
+    }
+
+    private static void printHelp() {
+            System.out.println("Available commands:");
+            System.out.println("1. list - Display all tasks");
+            System.out.println("2. todo <description> - Add a ToDo");
+            System.out.println("3. deadline <description> /by <date> - Add a Deadline");
+            System.out.println("4. event <description> /from <start> /to <end> - Add an Event");
+            System.out.println("5. mark <taskId> - Mark a task as completed");
+            System.out.println("6. unmark <taskId> - Unmark a task");
+            System.out.println("7. delete <taskId> - Delete a task");
+            System.out.println("8. bye - Exit the application");
+            System.out.println("9. help - Print all available commands");
     }
 }

@@ -14,10 +14,10 @@ class Deadline extends Task{
 
     String getStart() { return "";}
 
-   String getEnd(){
+    String getEnd(){
         return this.end;
     }
-
+    @Override
     Task toggleStatus(Task task) {
         boolean newStatus = !task.getStatus();
         if (newStatus){
@@ -27,6 +27,18 @@ class Deadline extends Task{
         }
         return new Deadline(task.getId(), task.getDescription(), newStatus, task.getEnd());
 
+    }
+    @Override
+    boolean isValid() {
+        if (super.getDescription().isEmpty()) {
+            System.out.println("Your description cannot be empty!");
+            return false;
+        } else if (this.getEnd().isEmpty()) {
+            System.out.println("Please enter a valid deadline.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

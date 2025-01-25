@@ -1,6 +1,5 @@
 class ToDos extends Task{
 
-
     ToDos(int index, String description) {
         super(index, description);
     }
@@ -13,6 +12,7 @@ class ToDos extends Task{
 
     String getEnd() { return "";}
 
+    @Override
     Task toggleStatus(Task task) {
         boolean newStatus = !task.getStatus();
         if (newStatus){
@@ -22,6 +22,16 @@ class ToDos extends Task{
         }
         return new ToDos(task.getId(), task.getDescription(), newStatus);
 
+    }
+
+    @Override
+    boolean isValid() {
+        if (super.getDescription().isEmpty()) {
+            System.out.println("Please enter a description.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

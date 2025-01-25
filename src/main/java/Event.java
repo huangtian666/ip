@@ -24,6 +24,7 @@ class Event extends Task{
         return this.end;
     }
 
+    @Override
     Task toggleStatus(Task task) {
         boolean newStatus = !task.getStatus();
         if (newStatus){
@@ -33,6 +34,19 @@ class Event extends Task{
         }
         return new Event(task.getId(), task.getDescription(), newStatus, task.getStart(), task.getEnd());
 
+    }
+
+    @Override
+    boolean isValid() {
+        if (super.getDescription().isEmpty()) {
+            System.out.println("Your description cannot be empty!");
+            return false;
+        } else if (this.getEnd().isEmpty() || this.getStart().isEmpty()) {
+            System.out.println("Please enter a valid duration.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

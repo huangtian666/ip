@@ -35,6 +35,7 @@ abstract class Task {
     abstract String getStart();
     abstract String getEnd();
     abstract Task toggleStatus(Task task);
+    abstract boolean isValid();
 
     public String toString() {
         String icon = isDone ? "X" : " ";
