@@ -129,7 +129,7 @@ public class TalkGPT {
     private static void handleMark(ArrayList<Task> tasks, String request) {
         String [] requestArray = request.split(" ");
         int taskId = Integer.parseInt(requestArray[1]);
-        if (taskId < 0 || taskId >= tasks.size()) {
+        if (taskId < 1 || taskId > tasks.size()) {
             System.out.println("Please enter a valid task index");
         } else {
             Task oldTask = tasks.get(taskId - INDEX_OFFSET);
