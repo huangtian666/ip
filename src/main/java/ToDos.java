@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 class ToDos extends Task{
 
     ToDos(int index, String description) {
@@ -8,9 +11,15 @@ class ToDos extends Task{
         super(index, description, status);
     }
 
-    String getStart() { return "";}
+    @Override
+    LocalDateTime getStart() {
+        return LocalDateTime.now();
+    }
 
-    String getEnd() { return "";}
+    @Override
+    LocalDateTime getEnd() {
+        return LocalDateTime.now();
+    }
 
     @Override
     Task toggleStatus() {
@@ -32,6 +41,11 @@ class ToDos extends Task{
         } else {
             return true;
         }
+    }
+
+    @Override
+    boolean isDueOn(LocalDate dueDate) {
+        return false;
     }
 
     @Override
