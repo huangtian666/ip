@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 abstract class Task {
 
     private String description;
@@ -32,11 +36,12 @@ abstract class Task {
         this.id = id;
     }
 
-    abstract String getStart();
-    abstract String getEnd();
+    abstract LocalDateTime getStart();
+    abstract LocalDateTime getEnd();
     abstract Task toggleStatus();
     abstract boolean isValid();
     abstract String toFileFormat();
+    abstract boolean isDueOn(LocalDate dueDate);
 
     static Task fromFileFormat(String line) {
         String[] parts = line.split(" \\| ");

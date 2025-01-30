@@ -1,26 +1,38 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 class Event extends Task{
 
-    private String start;
-    private String end;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
     Event(int index, String description, String start, String end) {
         super(index, description);
-        this.start = start;
-        this.end = end;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        this.start = LocalDateTime.parse(end, formatter);
+        this.end = LocalDateTime.parse(end, formatter);
     }
 
     Event(int index, String description, boolean status, String start, String end) {
+        super(index, description, status);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        this.start = LocalDateTime.parse(start, formatter);
+        this.end = LocalDateTime.parse(end, formatter);
+    }
+
+    Event(int index, String description, boolean status, LocalDateTime start, LocalDateTime end) {
         super(index, description, status);
         this.start = start;
         this.end = end;
     }
 
     @Override
-    String getStart() {
+    LocalDateTime getStart() {
         return this.start;
     }
     @Override
-    String getEnd() {
+    LocalDateTime getEnd() {
         return this.end;
     }
 
@@ -40,7 +52,7 @@ class Event extends Task{
         if (super.getDescription().isEmpty()) {
             System.out.println("Your description cannot be empty!");
             return false;
-        } else if (this.getEnd().isEmpty() || this.getStart().isEmpty()) {
+        } else if (this.getEnd().isBefore(this.getStart())) {
             System.out.println("Please enter a valid duration.");
             return false;
         } else {
@@ -49,15 +61,22 @@ class Event extends Task{
     }
 
     @Override
+    boolean isDueOn(LocalDate dueDate) {
+        return this.end.toLocalDate().equals(dueDate);
+    }
+
+    @Override
     String toFileFormat() { // D | id | isDone | description | start | end
+        DateTimeFormatter fileFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         return "E | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription()
-                + " | " +  this.getStart() + " | " +  this.getEnd();
+                + " | " +  this.getStart().format(fileFormatter) + " | " +  this.getEnd().format(fileFormatter);
     }
 
     @Override
     public String toString(){
         String icon = super.getStatus() ? "X" : " ";
-        return "[E] [" + icon +"] " + super.getDescription()
-                + " (from: " + this.start + " to: " + this.end + ")";
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+        return "[E] [" + icon +"] " + super.getDescription() + " (from: " + this.start.format(displayFormatter)
+                + " to: " + this.end.format(displayFormatter) + ")";
     }
 }

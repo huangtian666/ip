@@ -1,6 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TalkGPT {
 
@@ -9,6 +11,7 @@ public class TalkGPT {
             "Please use: deadline <description> /by <date>";
     private static final String EVENT_REMINDER = "Sorry, the format you entered is invalid. " +
             "Please use: event <description> /from <start> /to <end>";
+    private static final String NO_TASK = "You have no task yet!";
 
     public static void main(String[] args) {
 
@@ -35,6 +38,8 @@ public class TalkGPT {
                 printHelp();
             } else if (request.equals("clear")) {
                 clearTasks(tasks);
+            } else if (request.startsWith("list on")) {
+                listTasksDueOnDate(tasks, request);
             } else {
                 addTask(tasks, request);//add task
             }
@@ -61,7 +66,7 @@ public class TalkGPT {
         int taskId = Integer.parseInt(requestArray[1]);
 
         if (tasks.isEmpty()) {
-            System.out.println("You have no task yet!");
+            System.out.println(NO_TASK);
         } else {
             System.out.println("Your task has been deleted :)");
             System.out.println(tasks.get(taskId - INDEX_OFFSET));
@@ -142,7 +147,7 @@ public class TalkGPT {
 
     private static void clearTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
-            System.out.println("You have no task yet!");
+            System.out.println(NO_TASK);
         } else {
             tasks.clear();
             Storage.saveTasks(tasks); // Save the empty list to the file
@@ -150,17 +155,40 @@ public class TalkGPT {
         }
     }
 
+    private static void listTasksDueOnDate(ArrayList<Task> tasks, String request) {
+        if (tasks.isEmpty()) {
+            System.out.println(NO_TASK);
+        } else {
+            boolean found = false;
+            String dateString = request.substring(8).trim(); // Extract the date string
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            LocalDate filterDate = LocalDate.parse(dateString, formatter);
+            System.out.println("Tasks due on " + filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+            for (Task task : tasks) {
+                if(task.isDueOn(filterDate)) {
+                    found = true;
+                    System.out.println(task);
+                }
+            }
+            if(!found) {
+                System.out.println("No task due on this date.");
+            }
+        }
+    }
+
     private static void printHelp() {
             System.out.println("Available commands:");
             System.out.println("1. list - Display all tasks");
             System.out.println("2. todo <description> - Add a ToDo");
-            System.out.println("3. deadline <description> /by <date> - Add a Deadline");
-            System.out.println("4. event <description> /from <start> /to <end> - Add an Event");
+            System.out.println("3. deadline <description> /by <date: dd/mm/yyyy time> - Add a Deadline");
+            System.out.println("4. event <description> " +
+                    "/from <start: dd/mm/yyyy time> /to <end: dd/mm/yyyy time> - Add an Event");
             System.out.println("5. mark <taskId> - Mark a task as completed");
             System.out.println("6. unmark <taskId> - Unmark a task");
             System.out.println("7. delete <taskId> - Delete a task");
             System.out.println("8. bye - Exit the application");
             System.out.println("9. clear - Clear all tasks");
-            System.out.println("10. help - Print all available commands");
+            System.out.println("10. list on <date> - List tasks due on this date");
+            System.out.println("11. help - Print all available commands");
     }
 }
