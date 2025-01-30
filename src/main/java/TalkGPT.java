@@ -5,15 +5,40 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TalkGPT {
+    private final Storage storage;
+    private final TaskList tasks;
+    private final UI ui;
 
-    private static final int INDEX_OFFSET = 1;
-    private static final String DEADLINE_REMINDER = "Sorry, the format you entered is invalid. " +
-            "Please use: deadline <description> /by <date>";
-    private static final String EVENT_REMINDER = "Sorry, the format you entered is invalid. " +
-            "Please use: event <description> /from <start> /to <end>";
-    private static final String NO_TASK = "You have no task yet!";
+    public TalkGPT(String filePath) {
+        ui = new UI();
+        storage = new Storage(filePath);
+        TaskList loadedTasks;
+        try {
+            loadedTasks = new TaskList(storage.loadTasks());
+        } catch (Exception e) {
+            ui.showLoadingError();
+            loadedTasks = new TaskList();
+        }
+        this.tasks = loadedTasks;
+    }
+
+    public void run() {
+        ui.start();
+        boolean isExit = false;
+        while (!isExit) {
+            String input = ui.getUserInput();
+            Command c = Parser.parse(input, this.ui);
+            isExit = c.execute(this.tasks, this.storage, this.ui);
+        }
+    }
+
+
 
     public static void main(String[] args) {
+        new TalkGPT("./data/tasks.txt").run();
+    }
+
+    /*public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> tasks = Storage.loadTasks();
@@ -191,4 +216,6 @@ public class TalkGPT {
             System.out.println("10. list on <date> - List tasks due on this date");
             System.out.println("11. help - Print all available commands");
     }
+
+     */
 }

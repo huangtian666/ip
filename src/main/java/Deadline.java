@@ -49,7 +49,7 @@ class Deadline extends Task{
             System.out.println("Your description cannot be empty!");
             return false;
         } else if (this.getEnd().isBefore(LocalDateTime.now())) {
-            System.out.println("Please enter a valid deadline.");
+            System.out.println("Please enter a valid date after " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm")));
             return false;
         } else {
             return true;
