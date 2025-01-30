@@ -13,14 +13,14 @@ class ToDos extends Task{
     String getEnd() { return "";}
 
     @Override
-    Task toggleStatus(Task task) {
-        boolean newStatus = !task.getStatus();
+    Task toggleStatus() {
+        boolean newStatus = !super.getStatus();
         if (newStatus){
             System.out.println("Good Job on completing your task! I've marked this task!");
         } else {
             System.out.println("I've unmarked your task!");
         }
-        return new ToDos(task.getId(), task.getDescription(), newStatus);
+        return new ToDos(super.getId(), super.getDescription(), newStatus);
 
     }
 
@@ -32,6 +32,11 @@ class ToDos extends Task{
         } else {
             return true;
         }
+    }
+
+    @Override
+    String toFileFormat() { // D | id | isDone | description
+        return "T | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription();
     }
 
     @Override
