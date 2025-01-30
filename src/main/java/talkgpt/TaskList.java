@@ -1,14 +1,25 @@
+package talkgpt;
+
+import talkgpt.storage.Storage;
+import talkgpt.task.Task;
+import talkgpt.ui.Messages;
+import talkgpt.ui.UI;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-class TaskList {
+public class TaskList {
 
     private ArrayList<Task> tasks;
     private static final int INDEX_OFFSET = 1;
 
-    TaskList() {
+    public TaskList() {
         tasks = new ArrayList<>();
+    }
+
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public int size() {
@@ -19,11 +30,7 @@ class TaskList {
         return id >= 1 && id <= tasks.size();
     }
 
-    TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    void listTasks(UI ui) {
+    public void listTasks(UI ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
@@ -34,7 +41,7 @@ class TaskList {
         }
     }
 
-    void addTask(Task task, Storage storage, UI ui) {
+    public void addTask(Task task, Storage storage, UI ui) {
         if (task.isValid()) {
             boolean isDuplicate = tasks.stream()
                     .anyMatch(x -> x.getDescription().equals(task.getDescription()));
@@ -49,7 +56,7 @@ class TaskList {
         }
     }
 
-    void handleMark(int taskId, Storage storage, UI ui) {
+    public void handleMark(int taskId, Storage storage, UI ui) {
         if (!isValidID(taskId)) {
             ui.showMessage(Messages.Error.INVALID_TASK_INDEX.get());
         } else {
@@ -60,12 +67,12 @@ class TaskList {
         }
     }
 
-    void clear(Storage storage) {
+   public void clear(Storage storage) {
         this.tasks.clear();
         storage.saveTasks(this.tasks);
-    }
+   }
 
-    void deleteTask(int taskId, Storage storage, UI ui) {
+   public void deleteTask(int taskId, Storage storage, UI ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
@@ -78,9 +85,9 @@ class TaskList {
             ui.showFormattedMessage(Messages.Info.TASK_COUNT, tasks.size());
             storage.saveTasks(tasks);
         }
-    }
+   }
 
-    void listTaskDueOn(String dueDate, UI ui) {
+   public void listTaskDueOn(String dueDate, UI ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
@@ -100,5 +107,5 @@ class TaskList {
                 ui.showMessage(Messages.Info.NO_TASK_ON.get());
             }
         }
-    }
+   }
 }

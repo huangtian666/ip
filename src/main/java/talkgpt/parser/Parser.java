@@ -1,4 +1,10 @@
-class Parser {
+package talkgpt.parser;
+
+import talkgpt.command.*;
+import talkgpt.ui.Messages;
+import talkgpt.ui.UI;
+
+public class Parser {
 
     public static Command parse(String request, UI ui) {
         if (request.equals("list")) {

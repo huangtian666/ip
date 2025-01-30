@@ -1,59 +1,58 @@
+package talkgpt.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class Event extends Task{
+public class Deadline extends Task{
 
-    private LocalDateTime start;
     private LocalDateTime end;
 
-    Event(int index, String description, String start, String end) {
+    public Deadline(int index, String description, String end){
         super(index, description);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-        this.start = LocalDateTime.parse(end, formatter);
         this.end = LocalDateTime.parse(end, formatter);
     }
 
-    Event(int index, String description, boolean status, String start, String end) {
+    public Deadline(int index, String description, boolean status, String end) {
         super(index, description, status);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-        this.start = LocalDateTime.parse(start, formatter);
         this.end = LocalDateTime.parse(end, formatter);
     }
 
-    Event(int index, String description, boolean status, LocalDateTime start, LocalDateTime end) {
+    public Deadline(int index, String description, boolean status, LocalDateTime end) {
         super(index, description, status);
-        this.start = start;
         this.end = end;
     }
 
     @Override
-    LocalDateTime getStart() {
-        return this.start;
+    public LocalDateTime getStart() {
+        return LocalDateTime.now();
     }
+
     @Override
-    LocalDateTime getEnd() {
+    public LocalDateTime getEnd(){
         return this.end;
     }
 
     @Override
-    Task toggleStatus() {
-        boolean newStatus = !super.getStatus();
+    public Task toggleStatus() {
+        boolean newStatus = !this.getStatus();
         if (newStatus){
             System.out.println("Good Job on completing your task! I've marked this task!");
         } else {
             System.out.println("I've unmarked your task!");
         }
-        return new Event(super.getId(), super.getDescription(), newStatus, this.getStart(), this.getEnd());
+        return new Deadline(super.getId(), super.getDescription(), newStatus, this.getEnd());
     }
 
     @Override
-    boolean isValid() {
+    public boolean isValid() {
         if (super.getDescription().isEmpty()) {
             System.out.println("Your description cannot be empty!");
             return false;
-        } else if (this.getEnd().isBefore(this.getStart())) {
-            System.out.println("Please enter a valid duration.");
+        } else if (this.getEnd().isBefore(LocalDateTime.now())) {
+            System.out.println("Please enter a valid date after " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm")));
             return false;
         } else {
             return true;
@@ -61,22 +60,21 @@ class Event extends Task{
     }
 
     @Override
-    boolean isDueOn(LocalDate dueDate) {
+    public boolean isDueOn(LocalDate dueDate) {
         return this.end.toLocalDate().equals(dueDate);
     }
 
     @Override
-    String toFileFormat() { // D | id | isDone | description | start | end
+    public String toFileFormat() { // D | id | isDone | description | deadline
         DateTimeFormatter fileFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-        return "E | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription()
-                + " | " +  this.getStart().format(fileFormatter) + " | " +  this.getEnd().format(fileFormatter);
+        return "D | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription()
+                + " | " +  this.getEnd().format(fileFormatter);
     }
 
     @Override
     public String toString(){
         String icon = super.getStatus() ? "X" : " ";
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
-        return "[E] [" + icon +"] " + super.getDescription() + " (from: " + this.start.format(displayFormatter)
-                + " to: " + this.end.format(displayFormatter) + ")";
+        return "[D] [" + icon +"] " + super.getDescription() + " (by: " + this.end.format(displayFormatter) + ")";
     }
 }

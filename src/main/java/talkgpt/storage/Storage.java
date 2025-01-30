@@ -1,12 +1,16 @@
+package talkgpt.storage;
+
+import talkgpt.task.*;
+
 import java.io.*;
 import java.util.ArrayList;
 
-class Storage {
+public class Storage {
     //private static final String FILE_PATH = "./data/talkgpt.txt";
 
     private final String filePath;
 
-    Storage(String filePath) {
+    public Storage(String filePath) {
         this.filePath = filePath;
     }
 

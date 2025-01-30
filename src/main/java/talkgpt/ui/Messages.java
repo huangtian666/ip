@@ -1,3 +1,5 @@
+package talkgpt.ui;
+
 public class Messages {
 
     public enum Error {
@@ -5,7 +7,7 @@ public class Messages {
         INVALID_EVENT("Invalid format! Use: event <description> /from <start> /to <end>"),
         EMPTY_TASK_LIST("You have no tasks yet!"),
         INVALID_TASK_INDEX("Invalid task index! Please enter a valid number."),
-        DUPLICATE_TASK("Task already exists: "),
+        DUPLICATE_TASK("talkgpt.task.Task already exists: "),
         INVALID_DATE_FORMAT("Invalid date format! Please use dd/MM/yyyy."),
         TASK_NOT_FOUND("No task found for the given date.");
 
@@ -23,7 +25,7 @@ public class Messages {
     public enum Info {
         TASK_DELETED("Your task has been deleted!"),
         TASK_CLEARED("All tasks have been cleared."),
-        WELCOME_MESSAGE("Hello! I'm TalkGPT\nWhat can I do for you?"),
+        WELCOME_MESSAGE("Hello! I'm talkgpt.TalkGPT\nWhat can I do for you?"),
         GOODBYE_MESSAGE("Goodbye! See you next time!"),
         TASK_ADDED("Your task has been added successfully!"),
         TASK_LIST("Your ToDo List is here!"),
@@ -44,7 +46,7 @@ public class Messages {
     }
 
     public enum Warning {
-        EMPTY_TASK_ID("Your Task ID cannot be empty!"),
+        EMPTY_TASK_ID("Your talkgpt.task.Task ID cannot be empty!"),
         EMPTY_DESCRIPTION("Please enter a task description!"),
         EMPTY_COMMAND("Your command cannot be empty!"),
         NO_TASKS_FOUND("No tasks found.");

@@ -1,49 +1,50 @@
+package talkgpt.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-abstract class Task {
+public abstract class Task {
 
     private String description;
     private int id;
     private boolean isDone;
 
-    Task(int index, String description) {
+    public Task(int index, String description) {
         this.id = index;
         this.description = description;
         this.isDone = false;
     }
 
-    Task(int index, String description, boolean status) {
+    public Task(int index, String description, boolean status) {
         this.id = index;
         this.description = description;
         this.isDone = status;
     }
 
-    int getId() {
+    public int getId() {
         return this.id;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return this.description;
     }
 
-    boolean getStatus() {
+   public  boolean getStatus() {
         return this.isDone;
     }
 
-    void setId(int id) {
+   public void setId(int id) {
         this.id = id;
     }
 
-    abstract LocalDateTime getStart();
-    abstract LocalDateTime getEnd();
-    abstract Task toggleStatus();
-    abstract boolean isValid();
-    abstract String toFileFormat();
-    abstract boolean isDueOn(LocalDate dueDate);
+    public abstract LocalDateTime getStart();
+    public abstract LocalDateTime getEnd();
+    public abstract Task toggleStatus();
+    public abstract boolean isValid();
+    public  abstract String toFileFormat();
+    public abstract boolean isDueOn(LocalDate dueDate);
 
-    static Task fromFileFormat(String line) {
+   public static Task fromFileFormat(String line) {
         String[] parts = line.split(" \\| ");
         int id = Integer.parseInt(parts[1]);
         boolean isDone = parts[2].equals("1");

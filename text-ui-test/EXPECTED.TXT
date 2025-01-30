@@ -1,4 +1,4 @@
-Hello! I'm TalkGPT
+Hello! I'm talkgpt.TalkGPT
 What can I do for you?
 [T] [ ] borrow book
 [D] [ ] return book (by: sunday)
