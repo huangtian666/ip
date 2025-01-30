@@ -25,14 +25,15 @@ class Event extends Task{
     }
 
     @Override
-    Task toggleStatus() {
-        boolean newStatus = !super.getStatus();
+    Task toggleStatus(Task task) {
+        boolean newStatus = !task.getStatus();
         if (newStatus){
             System.out.println("Good Job on completing your task! I've marked this task!");
         } else {
             System.out.println("I've unmarked your task!");
         }
-        return new Event(super.getId(), super.getDescription(), newStatus, this.getStart(), this.getEnd());
+        return new Event(task.getId(), task.getDescription(), newStatus, task.getStart(), task.getEnd());
+
     }
 
     @Override
@@ -46,12 +47,6 @@ class Event extends Task{
         } else {
             return true;
         }
-    }
-
-    @Override
-    String toFileFormat() { // D | id | isDone | description | start | end
-        return "E | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription()
-                + " | " +  this.getStart() + " | " +  this.getEnd();
     }
 
     @Override

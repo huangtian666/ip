@@ -18,16 +18,16 @@ class Deadline extends Task{
         return this.end;
     }
     @Override
-    Task toggleStatus() {
-        boolean newStatus = !this.getStatus();
+    Task toggleStatus(Task task) {
+        boolean newStatus = !task.getStatus();
         if (newStatus){
             System.out.println("Good Job on completing your task! I've marked this task!");
         } else {
             System.out.println("I've unmarked your task!");
         }
-        return new Deadline(super.getId(), super.getDescription(), newStatus, this.getEnd());
-    }
+        return new Deadline(task.getId(), task.getDescription(), newStatus, task.getEnd());
 
+    }
     @Override
     boolean isValid() {
         if (super.getDescription().isEmpty()) {
@@ -39,12 +39,6 @@ class Deadline extends Task{
         } else {
             return true;
         }
-    }
-
-    @Override
-    String toFileFormat() { // D | id | isDone | description | deadline
-        return "D | " + super.getId() + " | " + (super.getStatus() ? "1" : "0") + " | " + super.getDescription()
-                + " | " +  this.getEnd();
     }
 
     @Override

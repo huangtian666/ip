@@ -34,23 +34,8 @@ abstract class Task {
 
     abstract String getStart();
     abstract String getEnd();
-    abstract Task toggleStatus();
+    abstract Task toggleStatus(Task task);
     abstract boolean isValid();
-    abstract String toFileFormat();
-
-    static Task fromFileFormat(String line) {
-        String[] parts = line.split(" \\| ");
-        int id = Integer.parseInt(parts[1]);
-        boolean isDone = parts[2].equals("1");
-        String description = parts[3];
-
-        switch (parts[0]) {
-            case "T": return new ToDos(id, description, isDone);
-            case "D": return new Deadline(id, description, isDone, parts[4]);
-            case "E": return new Event(id, description, isDone, parts[4], parts[5]);
-            default: return null;
-        }
-    }
 
     public String toString() {
         String icon = isDone ? "X" : " ";
