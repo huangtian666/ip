@@ -33,8 +33,6 @@ public class TalkGPT {
         }
     }
 
-
-
     public static void main(String[] args) {
         new TalkGPT("./data/tasks.txt").run();
     }

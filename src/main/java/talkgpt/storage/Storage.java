@@ -6,7 +6,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Storage {
-    //private static final String FILE_PATH = "./data/talkgpt.txt";
 
     private final String filePath;
 
