@@ -4,8 +4,50 @@ import talkgpt.command.*;
 import talkgpt.ui.Messages;
 import talkgpt.ui.Ui;
 
+/**
+ * Parses user input and returns the corresponding command.
+ * <p>
+ * This class processes raw user input, determines the appropriate command,
+ * and creates an instance of the respective command class. It handles
+ * various commands such as adding, deleting, marking tasks, and listing them.
+ * </p>
+ *
+ * <p>Supported commands:</p>
+ * <ul>
+ *     <li>{@code list} - Displays all tasks.</li>
+ *     <li>{@code bye} - Exits the application.</li>
+ *     <li>{@code mark <taskId>} - Marks a task as completed.</li>
+ *     <li>{@code unmark <taskId>} - Unmarks a task.</li>
+ *     <li>{@code delete <taskId>} - Deletes a task.</li>
+ *     <li>{@code clear} - Clears all tasks.</li>
+ *     <li>{@code todo <description>} - Adds a To-Do task.</li>
+ *     <li>{@code deadline <description> /by <date>} - Adds a Deadline task.</li>
+ *     <li>{@code event <description> /from <start> /to <end>} - Adds an Event task.</li>
+ *     <li>{@code list on <date>} - Lists tasks due on a specific date.</li>
+ *     <li>{@code help} - Displays available commands.</li>
+ * </ul>
+ *
+ * <p>If an invalid command is entered, the parser returns a {@code NextCommand},
+ * allowing the user to try again.</p>
+ *
+ * @author Huang Tian
+ * @version 1.0
+ * @since 2025-02-01
+ */
 public class Parser {
 
+    /**
+     * Parses the user input and returns the corresponding command.
+     * <p>
+     * This method analyzes the input string and determines the appropriate
+     * command based on predefined patterns. It validates required parameters
+     * before constructing command objects.
+     * </p>
+     *
+     * @param request The user input string.
+     * @param ui      The user interface to display messages in case of errors.
+     * @return The corresponding {@code Command} object.
+     */
     public static Command parse(String request, Ui ui) {
         if (request.equals("list")) {
             return new ListCommand();

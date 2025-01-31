@@ -2,6 +2,18 @@ package talkgpt.ui;
 
 import java.util.Scanner;
 
+/**
+ * Handles user interaction for the TalkGPT application.
+ * <p>
+ * This class is responsible for displaying messages, reading user input, and
+ * formatting responses. It provides methods to show system messages, print
+ * available commands, and manage user interactions.
+ * </p>
+ *
+ * @author Huang Tian
+ * @version 1.0
+ * @since 2025-02-01
+ */
 public class Ui {
 
     private final Scanner sc;
@@ -30,6 +42,15 @@ public class Ui {
         System.out.println("Error loading tasks. Starting fresh...");
     }
 
+    /**
+     * Displays a formatted message using the specified {@code Messages.Info} enum.
+     * <p>
+     * This method allows formatted output with variable arguments.
+     * </p>
+     *
+     * @param message The {@code Messages.Info} enum containing the message format.
+     * @param args    The arguments to be formatted into the message.
+     */
     public void showFormattedMessage(Messages.Info message, Object... args) {
         System.out.printf(message.get() + "%n", args);
     }

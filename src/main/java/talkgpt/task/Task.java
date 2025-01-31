@@ -3,18 +3,47 @@ package talkgpt.task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Represents an abstract task.
+ * <p>
+ * This class defines the base structure for different types of tasks, including
+ * properties such as ID, description, and completion status.
+ * </p>
+ * <p>
+ * Concrete task types (e.g., {@code ToDos}, {@code Deadline}, {@code Event}) must
+ * implement methods to define their specific behaviors.
+ * </p>
+ *
+ * @author Huang Tian
+ * @version 1.0
+ * @since 2025-02-01
+ */
 public abstract class Task {
 
     private String description;
     private int id;
     private boolean isDone;
 
+    /**
+     * Constructs a new {@code Task} with the given ID and description.
+     * The task is initially marked as not completed.
+     *
+     * @param index       The unique ID of the task.
+     * @param description The task description.
+     */
     public Task(int index, String description) {
         this.id = index;
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Constructs a new {@code Task} with the given ID, description, and completion status.
+     *
+     * @param index       The unique ID of the task.
+     * @param description The task description.
+     * @param status      The completion status of the task.
+     */
     public Task(int index, String description, boolean status) {
         this.id = index;
         this.description = description;
@@ -39,11 +68,59 @@ public abstract class Task {
 
     public abstract LocalDateTime getStart();
     public abstract LocalDateTime getEnd();
+
+    /**
+     * Toggles the completion status of the task.
+     * <p>
+     * Concrete subclasses must implement this method to define their own completion behavior.
+     * </p>
+     *
+     * @return A new {@code Task} instance with the updated status.
+     */
     public abstract Task toggleStatus();
+
+    /**
+     * Validates whether the task has a valid state.
+     * <p>
+     * This typically involves checking if the description is not empty and,
+     * for deadline or event tasks, ensuring valid time ranges.
+     * </p>
+     *
+     * @return {@code true} if the task is valid, {@code false} otherwise.
+     */
     public abstract boolean isValid();
+
+    /**
+     * Converts the task into a string format suitable for file storage.
+     * <p>
+     * Concrete subclasses must define their own format for file representation.
+     * </p>
+     *
+     * @return A formatted string representing the task.
+     */
     public  abstract String toFileFormat();
+
+    /**
+     * Checks if the task is due on a specific date.
+     * <p>
+     * Concrete subclasses must implement this method to define due date logic.
+     * </p>
+     *
+     * @param dueDate The date to check against.
+     * @return {@code true} if the task is due on the given date, {@code false} otherwise.
+     */
     public abstract boolean isDueOn(LocalDate dueDate);
 
+    /**
+     * Creates a {@code Task} object from a string representation stored in a file.
+     * <p>
+     * This method parses a line from a file and reconstructs the appropriate
+     * {@code Task} object (either {@code ToDos}, {@code Deadline}, or {@code Event}).
+     * </p>
+     *
+     * @param line The task string in the format "Type | ID | Status | Description | (Additional fields if applicable)".
+     * @return A {@code Task} object corresponding to the parsed data, or {@code null} if the format is invalid.
+     */
    public static Task fromFileFormat(String line) {
         String[] parts = line.split(" \\| ");
         int id = Integer.parseInt(parts[1]);

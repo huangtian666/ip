@@ -9,13 +9,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Manages the list of Task
+ * <p>
+ * This class handles various task operations such as add, delete, list and so on
+ * </p>
+ *
+ * @author Huang Tian
+ * @version 1.0
+ * @since 2025-02-01
+ */
 public class TaskList {
 
     private ArrayList<Task> tasks;
     private static final int INDEX_OFFSET = 1;
 
     public TaskList() {
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
     public TaskList(ArrayList<Task> tasks) {
@@ -23,17 +33,28 @@ public class TaskList {
     }
 
     public int size() {
-        return tasks.size();
+        return this.tasks.size();
     }
 
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
 
+    /**
+     * Check if the taskId is valid
+     *
+     * @param id is the id of the task to be checked
+     * @return {@code true} if the ID is valid, {@code false} otherwise.
+     */
     public boolean isValidID(int id) {
         return id >= 1 && id <= tasks.size();
     }
 
+    /**
+     * Displays the list of tasks.
+     *
+     * @param ui The UI used to display messages.
+     */
     public void listTasks(Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
@@ -45,6 +66,16 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a new task to the task list.
+     * <p>
+     * If the task is valid and not a duplicate, it is added to the list and saved to storage.
+     * </p>
+     *
+     * @param task The task to add.
+     * @param storage The storage system to save the task.
+     * @param ui The UI used to display messages.
+     */
     public void addTask(Task task, Storage storage, Ui ui) {
         if (task.isValid()) {
             boolean isDuplicate = tasks.stream()
@@ -59,7 +90,13 @@ public class TaskList {
             }
         }
     }
-
+    /**
+     * Toggles the completion status of a task.
+     *
+     * @param taskId The ID of the task to mark as complete or incomplete.
+     * @param storage The storage system to update the task status.
+     * @param ui The UI used to display messages.
+     */
     public void handleMark(int taskId, Storage storage, Ui ui) {
         if (!isValidID(taskId)) {
             ui.showMessage(Messages.Error.INVALID_TASK_INDEX.get());
@@ -71,11 +108,27 @@ public class TaskList {
         }
     }
 
+    /**
+     * Clears all tasks from the task list.
+     *
+     * @param storage The storage system to update the cleared task list.
+     */
    public void clear(Storage storage) {
         this.tasks.clear();
         storage.saveTasks(this.tasks);
    }
 
+    /**
+     * Deletes a task from the task list.
+     * <p>
+     * If the list is empty, an error message is shown. Otherwise, the task is removed,
+     * and the remaining tasks are updated.
+     * </p>
+     *
+     * @param taskId The ID of the task to delete.
+     * @param storage The storage system to update the task list.
+     * @param ui The UI used to display messages.
+     */
    public void deleteTask(int taskId, Storage storage, Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
@@ -91,6 +144,12 @@ public class TaskList {
         }
    }
 
+    /**
+     * Lists all tasks due on a specific date.
+     *
+     * @param dueDate The due date in the format "d/M/yyyy".
+     * @param ui The UI used to display messages.
+     */
    public void listTaskDueOn(String dueDate, Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());

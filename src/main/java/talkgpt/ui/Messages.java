@@ -1,7 +1,32 @@
 package talkgpt.ui;
 
+/**
+ * Contains predefined messages categorized into errors, informational messages, and warnings.
+ * <p>
+ * This class provides structured messages for user interactions, ensuring
+ * consistency and readability in the application's responses.
+ * </p>
+ *
+ * <p>There are three categories of messages:</p>
+ * <ul>
+ *     <li>{@link Messages.Error} - Error messages indicating invalid input or failed operations.</li>
+ *     <li>{@link Messages.Info} - Informational messages for user feedback.</li>
+ *     <li>{@link Messages.Warning} - Warning messages for potential issues.</li>
+ * </ul>
+ *
+ * @author Huang Tian
+ * @version 1.0
+ * @since 2025-02-01
+ */
 public class Messages {
 
+    /**
+     * Enum representing various error messages.
+     * <p>
+     * These messages indicate errors such as invalid input formats, missing tasks, or unknown commands.
+     * Each message is prefixed with {@code [ERROR]} for clarity.
+     * </p>
+     */
     public enum Error {
         INVALID_DEADLINE("Invalid format! Use: deadline <description> /by <date>"),
         INVALID_EVENT("Invalid format! Use: event <description> /from <start> /to <end>"),
@@ -13,15 +38,32 @@ public class Messages {
         INVALID_INSTRUCTION("Sorry, I don't understand ;(.");
         private final String message;
 
+        /**
+         * Constructs an {@code Error} enum with the specified message.
+         *
+         * @param message The error message.
+         */
         Error(String message) {
             this.message = message;
         }
 
+        /**
+         * Returns the formatted error message.
+         *
+         * @return A string containing the error message prefixed with "[ERROR]".
+         */
         public String get() {
             return "[ERROR] " + message;  // Add prefix for better readability
         }
     }
 
+    /**
+     * Enum representing various informational messages.
+     * <p>
+     * These messages provide feedback to the user, such as confirmations for actions performed.
+     * Each message is prefixed with {@code [INFO]} for clarity.
+     * </p>
+     */
     public enum Info {
         TASK_DELETED("Your task has been deleted!"),
         TASK_CLEARED("All tasks have been cleared."),
@@ -45,6 +87,13 @@ public class Messages {
         }
     }
 
+    /**
+     * Enum representing various warning messages.
+     * <p>
+     * These messages indicate potential issues or missing input that require user attention.
+     * Each message is prefixed with {@code [WARNING]} for clarity.
+     * </p>
+     */
     public enum Warning {
         EMPTY_TASK_ID("Your talkgpt.task.Task ID cannot be empty!"),
         EMPTY_DESCRIPTION("Please enter a task description!"),
