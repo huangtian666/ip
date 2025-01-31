@@ -3,7 +3,7 @@ package talkgpt;
 import talkgpt.storage.Storage;
 import talkgpt.task.Task;
 import talkgpt.ui.Messages;
-import talkgpt.ui.UI;
+import talkgpt.ui.Ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +30,7 @@ public class TaskList {
         return id >= 1 && id <= tasks.size();
     }
 
-    public void listTasks(UI ui) {
+    public void listTasks(Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
@@ -41,7 +41,7 @@ public class TaskList {
         }
     }
 
-    public void addTask(Task task, Storage storage, UI ui) {
+    public void addTask(Task task, Storage storage, Ui ui) {
         if (task.isValid()) {
             boolean isDuplicate = tasks.stream()
                     .anyMatch(x -> x.getDescription().equals(task.getDescription()));
@@ -56,7 +56,7 @@ public class TaskList {
         }
     }
 
-    public void handleMark(int taskId, Storage storage, UI ui) {
+    public void handleMark(int taskId, Storage storage, Ui ui) {
         if (!isValidID(taskId)) {
             ui.showMessage(Messages.Error.INVALID_TASK_INDEX.get());
         } else {
@@ -72,7 +72,7 @@ public class TaskList {
         storage.saveTasks(this.tasks);
    }
 
-   public void deleteTask(int taskId, Storage storage, UI ui) {
+   public void deleteTask(int taskId, Storage storage, Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
@@ -87,7 +87,7 @@ public class TaskList {
         }
    }
 
-   public void listTaskDueOn(String dueDate, UI ui) {
+   public void listTaskDueOn(String dueDate, Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {

@@ -2,11 +2,11 @@ package talkgpt.ui;
 
 import java.util.Scanner;
 
-public class UI {
+public class Ui {
 
     private final Scanner sc;
 
-    public UI() {
+    public Ui() {
         this.sc = new Scanner(System.in);
     }
 

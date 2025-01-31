@@ -2,17 +2,17 @@ package talkgpt;
 
 import talkgpt.command.Command;
 import talkgpt.parser.Parser;
-import talkgpt.ui.UI;
 import talkgpt.storage.Storage;
+import talkgpt.ui.Ui;
 
 public class TalkGPT {
     private final Storage storage;
     private final TaskList tasks;
-    private final UI ui;
+    private final Ui ui;
 
     public TalkGPT(String filePath) {
-        ui = new UI();
-        storage = new Storage(filePath);
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
         TaskList loadedTasks;
         try {
             loadedTasks = new TaskList(storage.loadTasks());

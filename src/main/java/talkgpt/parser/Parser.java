@@ -2,11 +2,11 @@ package talkgpt.parser;
 
 import talkgpt.command.*;
 import talkgpt.ui.Messages;
-import talkgpt.ui.UI;
+import talkgpt.ui.Ui;
 
 public class Parser {
 
-    public static Command parse(String request, UI ui) {
+    public static Command parse(String request, Ui ui) {
         if (request.equals("list")) {
             return new ListCommand();
         } else if (request.equals("bye")) {

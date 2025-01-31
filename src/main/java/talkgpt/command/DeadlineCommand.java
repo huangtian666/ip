@@ -1,9 +1,9 @@
 package talkgpt.command;
 
-import talkgpt.ui.UI;
 import talkgpt.TaskList;
 import talkgpt.storage.Storage;
 import talkgpt.task.*;
+import talkgpt.ui.Ui;
 
 public class DeadlineCommand extends Command {
 
@@ -17,7 +17,7 @@ public class DeadlineCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, UI ui) {
+    public boolean execute(TaskList list, Storage storage, Ui ui) {
         Task newTask = new Deadline(list.size() + INDEX_OFFSET, description, deadline);
         list.addTask(newTask, storage, ui);
         return false;
