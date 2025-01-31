@@ -61,6 +61,14 @@ public class Parser {
                 duration = duration[1].split(" /to ");
                 return new EventCommand(description, duration[0], duration[1]);
             }
+        } else if (request.startsWith("find")) {
+            String[] requestBreakDown = request.split(" ");
+            if (requestBreakDown.length < 2) {
+                ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
+                return new NextCommand();
+            } else {
+                return new FindCommand(requestBreakDown[1]);
+            }
         } else {
             ui.showMessage(Messages.Error.INVALID_INSTRUCTION.get());
             return new NextCommand();
