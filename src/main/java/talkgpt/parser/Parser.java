@@ -26,7 +26,7 @@ public class Parser {
             }
         } else if (request.isEmpty()) {
             ui.showMessage(Messages.Warning.EMPTY_COMMAND.get());
-            return null;
+            return new NextCommand();
         } else if (request.equals("help")) {
             return new HelpCommand();
         } else if (request.equals("clear")) {
@@ -51,7 +51,7 @@ public class Parser {
                 String description = requestBreakDown[0].substring(9);
                 return new DeadlineCommand(description, requestBreakDown[1]);
             }
-        } else {
+        } else if (request.startsWith("event")) {
             if (!request.contains(" /from ") || !request.contains(" /to ")) {
                 ui.showMessage(Messages.Error.INVALID_EVENT.get());
                 return new NextCommand();
@@ -61,6 +61,9 @@ public class Parser {
                 duration = duration[1].split(" /to ");
                 return new EventCommand(description, duration[0], duration[1]);
             }
+        } else {
+            ui.showMessage(Messages.Error.INVALID_INSTRUCTION.get());
+            return new NextCommand();
         }
     }
 }

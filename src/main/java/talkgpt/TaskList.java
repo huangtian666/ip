@@ -26,6 +26,10 @@ public class TaskList {
         return tasks.size();
     }
 
+    public ArrayList<Task> getTasks() {
+        return this.tasks;
+    }
+
     public boolean isValidID(int id) {
         return id >= 1 && id <= tasks.size();
     }

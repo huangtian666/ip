@@ -9,8 +9,8 @@ public class Messages {
         INVALID_TASK_INDEX("Invalid task index! Please enter a valid number."),
         DUPLICATE_TASK("talkgpt.task.Task already exists: "),
         INVALID_DATE_FORMAT("Invalid date format! Please use dd/MM/yyyy."),
-        TASK_NOT_FOUND("No task found for the given date.");
-
+        TASK_NOT_FOUND("No task found for the given date."),
+        INVALID_INSTRUCTION("Sorry, I don't understand ;(.");
         private final String message;
 
         Error(String message) {
