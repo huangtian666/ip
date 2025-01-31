@@ -91,7 +91,7 @@ public class TaskList {
         if (tasks.isEmpty()) {
             ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
         } else {
-            boolean found = false;
+            boolean hasFound = false;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
             LocalDate filterDate = LocalDate.parse(dueDate, formatter);
             ui.showFormattedMessage(Messages.Info.TASK_DUE_ON,
@@ -99,11 +99,11 @@ public class TaskList {
 
             for (Task task : tasks) {
                 if(task.isDueOn(filterDate)) {
-                    found = true;
+                    hasFound = true;
                     System.out.println(task);
                 }
             }
-            if(!found) {
+            if(!hasFound) {
                 ui.showMessage(Messages.Info.NO_TASK_ON.get());
             }
         }
