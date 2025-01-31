@@ -11,7 +11,7 @@ public class Ui {
     }
 
     public void start() {
-        System.out.println("Hello! I'm talkgpt.TalkGPT.\nWhat can I do for you?");
+        System.out.println("Hello! I'm TalkGPT.\nWhat can I do for you?");
     }
 
     public void end() {
