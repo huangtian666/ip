@@ -184,7 +184,7 @@ public class TaskList {
         }
 
         if (!hasFound) {
-            ui.showMessage(Messages.Info.NO_TASK_FOUND.get());
+            ui.showMessage(Messages.Error.NO_TASK_FOUND.get());
         }
    }
 }
