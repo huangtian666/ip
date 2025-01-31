@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  * @since 2025-02-01
  */
-public class Deadline extends Task{
+public class Deadline extends Task {
 
     private LocalDateTime end;
 
@@ -117,7 +117,7 @@ public class Deadline extends Task{
      * @return A formatted string representation of the task.
      */
     @Override
-    public String toString(){
+    public String toString() {
         String icon = super.getStatus() ? "X" : " ";
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
         return "[D] [" + icon +"] " + super.getDescription() + " (by: " + this.end.format(displayFormatter) + ")";

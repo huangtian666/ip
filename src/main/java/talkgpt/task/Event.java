@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  * @since 2025-02-01
  */
-public class Event extends Task{
+public class Event extends Task {
 
     private LocalDateTime start;
     private LocalDateTime end;
