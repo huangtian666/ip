@@ -35,7 +35,9 @@ public class Messages {
         DUPLICATE_TASK("talkgpt.task.Task already exists: "),
         INVALID_DATE_FORMAT("Invalid date format! Please use dd/MM/yyyy."),
         TASK_NOT_FOUND("No task found for the given date."),
+        NO_TASK_FOUND("No task found for the given word/sentence."),
         INVALID_INSTRUCTION("Sorry, I don't understand ;(.");
+
         private final String message;
 
         /**

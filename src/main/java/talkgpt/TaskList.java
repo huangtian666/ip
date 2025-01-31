@@ -171,4 +171,20 @@ public class TaskList {
             }
         }
    }
+
+   public void findTask(String searchString, Storage storage, Ui ui) {
+       boolean hasFound = false;
+       int count = 0;
+        for (Task task : tasks) {
+            if (task.getDescription().contains(searchString)) {
+                count++;
+                hasFound = true;
+                ui.showMessage(count + task.toString());
+            }
+        }
+
+        if (!hasFound) {
+            ui.showMessage(Messages.Info.NO_TASK_FOUND.get());
+        }
+   }
 }
