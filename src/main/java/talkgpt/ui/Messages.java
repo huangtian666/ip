@@ -76,7 +76,9 @@ public class Messages {
         TASK_COUNT("You have %d tasks in your ToDo List now!"),
         NO_TASK_ON("No task due on this date."),
         ZERO_TASK("I have cleared your tasks! You have no task now"),
-        TASK_DUE_ON("Tasks due on ");
+        TASK_DUE_ON("Tasks due on "),
+        COMPLETE_TASK("Good Job on completing your task!"),
+        UNMARK_TASK("You have unmarked this task!");
 
         private final String message;
 

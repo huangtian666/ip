@@ -1,5 +1,8 @@
 package talkgpt.task;
 
+import talkgpt.ui.Messages;
+import talkgpt.ui.Ui;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -70,23 +73,24 @@ public class Deadline extends Task {
     }
 
     @Override
-    public Task toggleStatus() {
+    public Task toggleStatus(Ui ui) {
         boolean newStatus = !this.getStatus();
         if (newStatus){
-            System.out.println("Good Job on completing your task! I've marked this task!");
+            ui.showMessage(Messages.Info.COMPLETE_TASK.get());
         } else {
-            System.out.println("I've unmarked your task!");
+            ui.showMessage(Messages.Info.UNMARK_TASK.get());
         }
         return new Deadline(super.getId(), super.getDescription(), newStatus, this.getEnd());
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Ui ui) {
         if (super.getDescription().isEmpty()) {
-            System.out.println("Your description cannot be empty!");
+            ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
             return false;
         } else if (this.getEnd().isBefore(LocalDateTime.now())) {
-            System.out.println("Please enter a valid date after " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm")));
+            ui.showMessage("Please enter a valid date after: "
+                    + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm")));
             return false;
         } else {
             return true;

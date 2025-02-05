@@ -1,5 +1,8 @@
 package talkgpt.task;
 
+import talkgpt.ui.Messages;
+import talkgpt.ui.Ui;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -49,19 +52,19 @@ public class ToDos extends Task{
     }
 
     @Override
-    public Task toggleStatus() {
+    public Task toggleStatus(Ui ui) {
         boolean newStatus = !super.getStatus();
         if (newStatus){
-            System.out.println("Good Job on completing your task! I've marked this task!");
+            ui.showMessage(Messages.Info.COMPLETE_TASK.get());
         } else {
-            System.out.println("I've unmarked your task!");
+            ui.showMessage(Messages.Info.UNMARK_TASK.get());
         }
         return new ToDos(super.getId(), super.getDescription(), newStatus);
 
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Ui ui) {
         if (super.getDescription().isEmpty()) {
             System.out.println("Please enter a description.");
             return false;

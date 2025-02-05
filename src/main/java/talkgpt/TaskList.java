@@ -77,7 +77,7 @@ public class TaskList {
      * @param ui The UI used to display messages.
      */
     public void addTask(Task task, Storage storage, Ui ui) {
-        if (task.isValid()) {
+        if (task.isValid(ui)) {
             boolean isDuplicate = tasks.stream()
                     .anyMatch(x -> x.getDescription().equals(task.getDescription()));
             if (!isDuplicate) {
@@ -101,7 +101,7 @@ public class TaskList {
         if (!isValidID(taskId)) {
             ui.showMessage(Messages.Error.INVALID_TASK_INDEX.get());
         } else {
-            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).toggleStatus();
+            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).toggleStatus(ui);
             tasks.set(taskId - INDEX_OFFSET, updatedTask);
             storage.saveTasks(tasks);
             ui.showMessage(updatedTask.toString());

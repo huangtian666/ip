@@ -1,5 +1,7 @@
 package talkgpt.task;
 
+import talkgpt.ui.Ui;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -77,7 +79,7 @@ public abstract class Task {
      *
      * @return A new {@code Task} instance with the updated status.
      */
-    public abstract Task toggleStatus();
+    public abstract Task toggleStatus(Ui ui);
 
     /**
      * Validates whether the task has a valid state.
@@ -88,7 +90,7 @@ public abstract class Task {
      *
      * @return {@code true} if the task is valid, {@code false} otherwise.
      */
-    public abstract boolean isValid();
+    public abstract boolean isValid(Ui ui);
 
     /**
      * Converts the task into a string format suitable for file storage.
