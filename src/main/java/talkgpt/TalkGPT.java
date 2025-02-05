@@ -22,19 +22,20 @@ public class TalkGPT {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private final String filePath;
+    private static final String FILE_PATH = "./data/tasks.txt";
 
     /**
      * Constructs a new TalkGPT instance.
      * <p>
-     * It initializes the UI, loads tasks from the specified file path,
+     * It initializes the UI, loads tasks and filePath,
      * and handles any loading errors.
      * </p>
-     *
-     * @param filePath The file path where tasks are stored.
      */
-    public TalkGPT(String filePath) {
+    public TalkGPT() {
         this.ui = new Ui();
-        this.storage = new Storage(filePath);
+        this.filePath = FILE_PATH;
+        this.storage = new Storage(FILE_PATH);
         TaskList loadedTasks;
         try {
             loadedTasks = new TaskList(storage.loadTasks());
@@ -63,11 +64,18 @@ public class TalkGPT {
     }
 
     /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "TalkGPT heard: " + input;
+    }
+
+    /**
      * The main method that launches the TalkGPT program.
      *
      * @param args Command-line arguments (not used in this program).
      */
     public static void main(String[] args) {
-        new TalkGPT("./data/tasks.txt").run();
+        new TalkGPT().run();
     }
 }
