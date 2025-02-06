@@ -28,6 +28,8 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setTitle("TalkGPT");
             stage.setScene(scene);
+            stage.setMinHeight(250);
+            stage.setMinWidth(420);
             fxmlLoader.<MainWindow>getController().setTalkGpt(talkgpt);  // inject the Duke instance
             stage.show();
         } catch (IOException e) {
