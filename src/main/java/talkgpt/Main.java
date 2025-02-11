@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import talkgpt.ui.DialogBox;
-
-
+import talkgpt.ui.MainWindow;
 
 
 /**
