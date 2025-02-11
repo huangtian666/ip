@@ -14,7 +14,7 @@ public class FindCommand extends Command {
 
     @Override
     public boolean execute(TaskList list, Storage storage, Ui ui) {
-        list.findTask(this.search, storage, ui);
+        list.findTask(this.search, ui);
         return false;
     }
 }

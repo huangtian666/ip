@@ -77,6 +77,9 @@ public class TaskList {
      * @param ui The UI used to display messages.
      */
     public void addTask(Task task, Storage storage, Ui ui) {
+        assert task != null : "Task cannot be null!";
+        assert !task.getDescription().trim().isEmpty() : "Task description cannot be empty!";
+
         if (task.isValid(ui)) {
             boolean isDuplicate = tasks.stream()
                     .anyMatch(x -> x.getDescription().equals(task.getDescription()));
@@ -172,7 +175,7 @@ public class TaskList {
         }
    }
 
-   public void findTask(String searchString, Storage storage, Ui ui) {
+   public void findTask(String searchString, Ui ui) {
        boolean hasFound = false;
        int count = 0;
         for (Task task : tasks) {
