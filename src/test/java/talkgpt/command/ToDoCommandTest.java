@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import talkgpt.TaskList;
 import talkgpt.storage.Storage;
 import talkgpt.task.Task;
-import talkgpt.task.ToDos;
+import talkgpt.task.ToDo;
 import talkgpt.ui.Ui;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +31,7 @@ class ToDoCommandTest {
         assertEquals(1, taskList.size(), "TaskList should contain 1 task");
 
         Task addedTask = taskList.getTasks().get(0);
-        assertInstanceOf(ToDos.class, addedTask, "Added task should be an instance of ToDos");
+        assertInstanceOf(ToDo.class, addedTask, "Added task should be an instance of ToDo");
         assertEquals("Finish homework", addedTask.getDescription(), "Task description should match input");
     }
 

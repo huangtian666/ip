@@ -35,6 +35,16 @@ import talkgpt.ui.Ui;
  * @since 2025-02-01
  */
 public class Parser {
+    private static final int MARK_COMMAND_LENGTH = 2;
+    private static final int DELETE_COMMAND_LENGTH = 2;
+    private static final int TODO_COMMAND_LENGTH = 5;
+    private static final int DEADLINE_COMMAND_LENGTH = 9;
+    private static final int EVENT_COMMAND_LENGTH = 6;
+    private static final int FIND_COMMAND_LENGTH = 2;
+    private static final int DATE_STARTING_INDEX = 8;
+    private static final String DEADLINE_SEPARATOR = " /by ";
+    private static final String EVENT_FROM_SEPARATOR = " /from ";
+    private static final String EVENT_TO_SEPARATOR = " /to ";
 
     /**
      * Parses the user input and returns the corresponding command.
@@ -49,69 +59,92 @@ public class Parser {
      * @return The corresponding {@code Command} object.
      */
     public static Command parse(String request, Ui ui) {
-        if (request.equals("list")) {
-            return new ListCommand();
-        } else if (request.equals("bye")) {
-            return new ExitCommand();
-        } else if (request.startsWith("mark") || request.startsWith("unmark")) {
-            String[] requestArray = request.split(" ");
-            int taskId = Integer.parseInt(requestArray[1]);
-            return new MarkCommand(taskId);
-        } else if (request.startsWith("delete")) {
-            String[] requestArray = request.split(" ");
-            if (requestArray.length < 2) {
-                ui.showMessage(Messages.Warning.EMPTY_TASK_ID.get());
-                return new NextCommand(); //change
-            } else {
-                int taskId = Integer.parseInt(requestArray[1]);
-                return new DeleteCommand(taskId);
-            }
-        } else if (request.isEmpty()) {
+        request = request.trim();
+
+        if (request.isEmpty()) {
             ui.showMessage(Messages.Warning.EMPTY_COMMAND.get());
             return new NextCommand();
-        } else if (request.equals("help")) {
+        }
+
+        String[] requestArray = request.split(" ");
+        String command = requestArray[0]; // Extract the first word as the command
+
+        switch (command) {
+        case "list":
+            return new ListCommand();
+
+        case "bye":
+            return new ExitCommand();
+
+        case "help":
             return new HelpCommand();
-        } else if (request.equals("clear")) {
+
+        case "clear":
             return new ClearCommand();
-        } else if (request.startsWith("list on")) {
-            String dateString = request.substring(8).trim(); // Extract the date string
+
+        case "mark":
+        case "unmark":
+            if (requestArray.length < MARK_COMMAND_LENGTH) {
+                ui.showMessage(Messages.Warning.EMPTY_TASK_ID.get());
+                return new NextCommand();
+            }
+            int taskId = Integer.parseInt(requestArray[1]);
+            return new MarkCommand(taskId);
+
+        case "delete":
+            if (requestArray.length < DELETE_COMMAND_LENGTH) {
+                ui.showMessage(Messages.Warning.EMPTY_TASK_ID.get());
+                return new NextCommand();
+            }
+            int deleteTaskId = Integer.parseInt(requestArray[1]);
+            return new DeleteCommand(deleteTaskId);
+
+        case "list on":
+            String dateString = request.substring(DATE_STARTING_INDEX).trim(); // Extract the date string
             return new ListOnCommand(dateString);
-        } else if (request.startsWith("todo")) {
-            if (request.length() <= 5) {
+
+        case "todo":
+            if (request.length() <= TODO_COMMAND_LENGTH) {
                 ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
                 return new NextCommand();
-            } else {
-                String description = request.substring(5);
-                return new ToDoCommand(description);
             }
-        } else if (request.startsWith("deadline")) {
-            if (!request.contains(" /by ")) {
+            String todoDescription = request.substring(TODO_COMMAND_LENGTH).trim();
+            return new ToDoCommand(todoDescription);
+
+        case "deadline":
+            if (!request.contains(DEADLINE_SEPARATOR)) {
                 ui.showMessage(Messages.Error.INVALID_DEADLINE.get());
                 return new NextCommand();
-            } else {
-                String[] requestBreakDown = request.split(" /by ");
-                String description = requestBreakDown[0].substring(9);
-                return new DeadlineCommand(description, requestBreakDown[1]);
             }
-        } else if (request.startsWith("event")) {
-            if (!request.contains(" /from ") || !request.contains(" /to ")) {
+            String[] deadlineParts = request.split(DEADLINE_SEPARATOR);
+            if (deadlineParts.length < 2) {
+                ui.showMessage(Messages.Error.INVALID_DEADLINE.get());
+                return new NextCommand();
+            }
+            return new DeadlineCommand(deadlineParts[0].substring(DEADLINE_COMMAND_LENGTH).trim(), deadlineParts[1].trim());
+
+        case "event":
+            if (!request.contains(EVENT_FROM_SEPARATOR) || !request.contains(EVENT_TO_SEPARATOR)) {
                 ui.showMessage(Messages.Error.INVALID_EVENT.get());
                 return new NextCommand();
-            } else {
-                String[] duration = request.split(" /from ");
-                String description = duration[0].substring(6);
-                duration = duration[1].split(" /to ");
-                return new EventCommand(description, duration[0], duration[1]);
             }
-        } else if (request.startsWith("find")) {
-            String[] requestBreakDown = request.split(" ");
-            if (requestBreakDown.length < 2) {
+            String[] eventParts = request.split(EVENT_FROM_SEPARATOR);
+            if (eventParts.length < 2 || !eventParts[1].contains(EVENT_TO_SEPARATOR)) {
+                ui.showMessage(Messages.Error.INVALID_EVENT.get());
+                return new NextCommand();
+            }
+            String eventDescription = eventParts[0].substring(EVENT_COMMAND_LENGTH).trim();
+            String[] eventDuration = eventParts[1].split(EVENT_TO_SEPARATOR);
+            return new EventCommand(eventDescription, eventDuration[0].trim(), eventDuration[1].trim());
+
+        case "find":
+            if (requestArray.length < FIND_COMMAND_LENGTH) {
                 ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
                 return new NextCommand();
-            } else {
-                return new FindCommand(requestBreakDown[1]);
             }
-        } else {
+            return new FindCommand(requestArray[1]);
+
+        default:
             ui.showMessage(Messages.Error.INVALID_INSTRUCTION.get());
             return new NextCommand();
         }
