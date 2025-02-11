@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * properties such as ID, description, and completion status.
  * </p>
  * <p>
- * Concrete task types (e.g., {@code ToDos}, {@code Deadline}, {@code Event}) must
+ * Concrete task types (e.g., {@code ToDo}, {@code Deadline}, {@code Event}) must
  * implement methods to define their specific behaviors.
  * </p>
  *
@@ -117,7 +117,7 @@ public abstract class Task {
      * Creates a {@code Task} object from a string representation stored in a file.
      * <p>
      * This method parses a line from a file and reconstructs the appropriate
-     * {@code Task} object (either {@code ToDos}, {@code Deadline}, or {@code Event}).
+     * {@code Task} object (either {@code ToDo}, {@code Deadline}, or {@code Event}).
      * </p>
      *
      * @param line The task string in the format "Type | ID | Status | Description | (Additional fields if applicable)".
@@ -130,7 +130,7 @@ public abstract class Task {
         String description = parts[3];
 
         switch (parts[0]) {
-            case "T": return new ToDos(id, description, isDone);
+            case "T": return new ToDo(id, description, isDone);
             case "D": return new Deadline(id, description, isDone, parts[4]);
             case "E": return new Event(id, description, isDone, parts[4], parts[5]);
             default: return null;

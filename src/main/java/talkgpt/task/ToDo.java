@@ -17,27 +17,27 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2025-02-01
  */
-public class ToDos extends Task{
+public class ToDo extends Task{
 
     /**
-     * Constructs a {@code ToDos} task with the given ID and description.
+     * Constructs a {@code ToDo} task with the given ID and description.
      * The task is initially marked as not completed.
      *
      * @param index       The unique ID of the task.
      * @param description The task description.
      */
-    public ToDos(int index, String description) {
+    public ToDo(int index, String description) {
         super(index, description);
     }
 
     /**
-     * Constructs a {@code ToDos} task with the given ID, description, and completion status.
+     * Constructs a {@code ToDo} task with the given ID, description, and completion status.
      *
      * @param index       The unique ID of the task.
      * @param description The task description.
      * @param status      The completion status of the task.
      */
-    public ToDos(int index, String description, boolean status) {
+    public ToDo(int index, String description, boolean status) {
         super(index, description, status);
     }
 
@@ -59,7 +59,7 @@ public class ToDos extends Task{
         } else {
             ui.showMessage(Messages.Info.UNMARK_TASK.get());
         }
-        return new ToDos(super.getId(), super.getDescription(), newStatus);
+        return new ToDo(super.getId(), super.getDescription(), newStatus);
 
     }
 
