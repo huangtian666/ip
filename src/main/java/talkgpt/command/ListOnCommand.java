@@ -13,8 +13,7 @@ public class ListOnCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        list.listTaskDueOn(this.dueDate, ui);
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return list.listTaskDueOn(this.dueDate, ui);
     }
 }

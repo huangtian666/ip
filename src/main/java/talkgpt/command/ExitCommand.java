@@ -9,8 +9,7 @@ public class ExitCommand extends Command {
     public ExitCommand() {}
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        ui.end();
-        return true;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return ui.end();
     }
 }

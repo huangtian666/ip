@@ -62,8 +62,7 @@ public class Parser {
         request = request.trim();
 
         if (request.isEmpty()) {
-            ui.showMessage(Messages.Warning.EMPTY_COMMAND.get());
-            return new NextCommand();
+            return new NextCommand(Messages.Warning.EMPTY_COMMAND.get());
         }
 
         String[] requestArray = request.split(" ");
@@ -85,16 +84,14 @@ public class Parser {
         case "mark":
         case "unmark":
             if (requestArray.length < MARK_COMMAND_LENGTH) {
-                ui.showMessage(Messages.Warning.EMPTY_TASK_ID.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Warning.EMPTY_TASK_ID.get());
             }
             int taskId = Integer.parseInt(requestArray[1]);
             return new MarkCommand(taskId);
 
         case "delete":
             if (requestArray.length < DELETE_COMMAND_LENGTH) {
-                ui.showMessage(Messages.Warning.EMPTY_TASK_ID.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Warning.EMPTY_TASK_ID.get());
             }
             int deleteTaskId = Integer.parseInt(requestArray[1]);
             return new DeleteCommand(deleteTaskId);
@@ -105,33 +102,28 @@ public class Parser {
 
         case "todo":
             if (request.length() <= TODO_COMMAND_LENGTH) {
-                ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Warning.EMPTY_DESCRIPTION.get());
             }
             String todoDescription = request.substring(TODO_COMMAND_LENGTH).trim();
             return new ToDoCommand(todoDescription);
 
         case "deadline":
             if (!request.contains(DEADLINE_SEPARATOR)) {
-                ui.showMessage(Messages.Error.INVALID_DEADLINE.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Error.INVALID_DEADLINE.get());
             }
             String[] deadlineParts = request.split(DEADLINE_SEPARATOR);
             if (deadlineParts.length < 2) {
-                ui.showMessage(Messages.Error.INVALID_DEADLINE.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Error.INVALID_DEADLINE.get());
             }
             return new DeadlineCommand(deadlineParts[0].substring(DEADLINE_COMMAND_LENGTH).trim(), deadlineParts[1].trim());
 
         case "event":
             if (!request.contains(EVENT_FROM_SEPARATOR) || !request.contains(EVENT_TO_SEPARATOR)) {
-                ui.showMessage(Messages.Error.INVALID_EVENT.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Error.INVALID_EVENT.get());
             }
             String[] eventParts = request.split(EVENT_FROM_SEPARATOR);
             if (eventParts.length < 2 || !eventParts[1].contains(EVENT_TO_SEPARATOR)) {
-                ui.showMessage(Messages.Error.INVALID_EVENT.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Error.INVALID_EVENT.get());
             }
             String eventDescription = eventParts[0].substring(EVENT_COMMAND_LENGTH).trim();
             String[] eventDuration = eventParts[1].split(EVENT_TO_SEPARATOR);
@@ -139,14 +131,12 @@ public class Parser {
 
         case "find":
             if (requestArray.length < FIND_COMMAND_LENGTH) {
-                ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
-                return new NextCommand();
+                return new NextCommand(Messages.Warning.EMPTY_DESCRIPTION.get());
             }
             return new FindCommand(requestArray[1]);
 
         default:
-            ui.showMessage(Messages.Error.INVALID_INSTRUCTION.get());
-            return new NextCommand();
+            return new NextCommand(Messages.Error.INVALID_INSTRUCTION.get());
         }
     }
 }

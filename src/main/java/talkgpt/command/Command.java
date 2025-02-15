@@ -45,5 +45,5 @@ public abstract class Command {
      * @param ui      The user interface for displaying messages.
      * @return {@code true} if the command signals the application to exit, {@code false} otherwise.
      */
-    abstract public boolean execute(TaskList list, Storage storage, Ui ui);
+    abstract public String execute(TaskList list, Storage storage, Ui ui);
 }

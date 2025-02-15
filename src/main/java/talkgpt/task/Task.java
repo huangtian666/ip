@@ -79,18 +79,7 @@ public abstract class Task {
      *
      * @return A new {@code Task} instance with the updated status.
      */
-    public abstract Task toggleStatus(Ui ui);
-
-    /**
-     * Validates whether the task has a valid state.
-     * <p>
-     * This typically involves checking if the description is not empty and,
-     * for deadline or event tasks, ensuring valid time ranges.
-     * </p>
-     *
-     * @return {@code true} if the task is valid, {@code false} otherwise.
-     */
-    public abstract boolean isValid(Ui ui);
+    public abstract Task toggleStatus();
 
     /**
      * Converts the task into a string format suitable for file storage.

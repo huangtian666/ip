@@ -22,12 +22,12 @@ public class Ui {
         this.sc = new Scanner(System.in);
     }
 
-    public void start() {
-        System.out.println("Hello! I'm TalkGPT.\nWhat can I do for you?");
+    public String start() {
+        return "Hello! I'm TalkGPT.\nWhat can I do for you?";
     }
 
-    public void end() {
-        System.out.println("Goodbye! See you next time!");
+    public String end() {
+        return "Goodbye! See you next time!";
     }
 
     public String getUserInput() {
@@ -51,27 +51,26 @@ public class Ui {
      * @param message The {@code Messages.Info} enum containing the message format.
      * @param args    The arguments to be formatted into the message.
      */
-    public void showFormattedMessage(Messages.Info message, Object... args) {
-        System.out.printf(message.get() + "%n", args);
+    public String showFormattedMessage(Messages.Info message, Object... args) {
+        return String.format(message.get() + "%n", args);
     }
 
-    public void emptyLine() {
-        System.out.println();
-    }
 
-    public void printHelp() {
-        System.out.println("Available commands:");
-        System.out.println("1. list - Display all tasks");
-        System.out.println("2. todo <description> - Add a ToDo");
-        System.out.println("3. deadline <description> /by <date: dd/mm/yyyy time> - Add a talkgpt.task.Deadline");
-        System.out.println("4. event <description> " +
-                "/from <start: dd/mm/yyyy time> /to <end: dd/mm/yyyy time> - Add an talkgpt.task.Event");
-        System.out.println("5. mark <taskId> - Mark a task as completed");
-        System.out.println("6. unmark <taskId> - Unmark a task");
-        System.out.println("7. delete <taskId> - Delete a task");
-        System.out.println("8. bye - Exit the application");
-        System.out.println("9. clear - Clear all tasks");
-        System.out.println("10. list on <date> - List tasks due on this date");
-        System.out.println("11. help - Print all available commands");
+
+    public String printHelp() {
+        return("Available commands:\n" +
+                        "1. list - Display all tasks\n" +
+                        "2. todo <description> - Add a ToDo\n" +
+                        "3. deadline <description> /by <date: dd/mm/yyyy time> - Add a Deadline\n" +
+                        "4. event <description> /from <start: dd/mm/yyyy time> /to <end: dd/mm/yyyy time> - Add an Event\n" +
+                        "5. mark <taskId> - Mark a task as completed\n" +
+                        "6. unmark <taskId> - Unmark a task\n" +
+                        "7. delete <taskId> - Delete a task\n" +
+                        "8. bye - Exit the application\n" +
+                        "9. clear - Clear all tasks\n" +
+                        "10. list on <date> - List tasks due on this date\n" +
+                        "11. help - Print all available commands"
+        );
+
     }
 }

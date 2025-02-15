@@ -15,9 +15,8 @@ public class ToDoCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
+    public String execute(TaskList list, Storage storage, Ui ui) {
         Task newTask = new ToDo(list.size() + INDEX_OFFSET, description);
-        list.addTask(newTask, storage, ui);
-        return false;
+        return list.addTask(newTask, storage, ui);
     }
 }

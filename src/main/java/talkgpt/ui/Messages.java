@@ -28,7 +28,7 @@ public class Messages {
      * </p>
      */
     public enum Error {
-        INVALID_DEADLINE("Invalid format! Use: deadline <description> /by <date>"),
+        INVALID_DEADLINE("Invalid format! Use: deadline <description> /by dd/mm/yyyy hhmm"),
         INVALID_EVENT("Invalid format! Use: event <description> /from <start> /to <end>"),
         EMPTY_TASK_LIST("You have no tasks yet!"),
         INVALID_TASK_INDEX("Invalid task index! Please enter a valid number."),
@@ -36,7 +36,8 @@ public class Messages {
         INVALID_DATE_FORMAT("Invalid date format! Please use dd/MM/yyyy."),
         TASK_NOT_FOUND("No task found for the given date."),
         NO_TASK_FOUND("No task found for the given word/sentence."),
-        INVALID_INSTRUCTION("Sorry, I don't understand ;(.");
+        INVALID_INSTRUCTION("Sorry, I don't understand ;(."),
+        INVALID_TASK("Invalid task!");
 
         private final String message;
 

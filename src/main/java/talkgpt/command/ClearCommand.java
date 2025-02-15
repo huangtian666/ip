@@ -10,9 +10,8 @@ public class ClearCommand extends Command {
     public ClearCommand() {}
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
+    public String execute(TaskList list, Storage storage, Ui ui) {
         list.clear(storage);
-        ui.showMessage(Messages.Info.ZERO_TASK.get());
-        return false;
+        return Messages.Info.ZERO_TASK.get();
     }
 }

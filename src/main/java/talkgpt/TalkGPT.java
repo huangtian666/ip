@@ -55,19 +55,25 @@ public class TalkGPT {
      */
     public void run() {
         ui.start();
-        boolean isExit = false;
-        while (!isExit) {
+        String output = "";
+        while (true) {
             String input = ui.getUserInput();
             Command c = Parser.parse(input, this.ui);
-            isExit = c.execute(this.tasks, this.storage, this.ui);
+            output += c.execute(this.tasks, this.storage, this.ui);
         }
+    }
+
+    public String start() {
+        return ui.start();
     }
 
     /**
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        return "TalkGPT heard: " + input;
+        Command c = Parser.parse(input, this.ui);
+        String output = c.execute(this.tasks, this.storage, this.ui);
+        return output;
     }
 
     /**

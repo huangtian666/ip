@@ -52,18 +52,18 @@ public class TaskList {
 
     /**
      * Displays the list of tasks.
-     *
-     * @param ui The UI used to display messages.
      */
-    public void listTasks(Ui ui) {
+    public String listTasks() {
         if (tasks.isEmpty()) {
-            ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
-        } else {
-            ui.showMessage(Messages.Info.TASK_LIST.get());
-            for (Task task : tasks) {
-                ui.showMessage(task.getId() + ". " + task);
-            }
+            return Messages.Error.EMPTY_TASK_LIST.get();
         }
+
+        StringBuilder output = new StringBuilder();
+        output.append(Messages.Info.TASK_LIST.get()).append("\n");
+        for (Task task : tasks) {
+            output.append(task.getId() + ". " + task + "\n");
+        }
+        return output.toString();
     }
 
     /**
@@ -76,21 +76,18 @@ public class TaskList {
      * @param storage The storage system to save the task.
      * @param ui The UI used to display messages.
      */
-    public void addTask(Task task, Storage storage, Ui ui) {
+    public String addTask(Task task, Storage storage, Ui ui) {
         assert task != null : "Task cannot be null!";
         assert !task.getDescription().trim().isEmpty() : "Task description cannot be empty!";
 
-        if (task.isValid(ui)) {
-            boolean isDuplicate = tasks.stream()
-                    .anyMatch(x -> x.getDescription().equals(task.getDescription()));
-            if (!isDuplicate) {
-                tasks.add(task);
-                storage.saveTasks(tasks);
-                ui.showMessage(Messages.Info.TASK_ADDED.get());
-                ui.showMessage(task.toString());
-            } else {
-                ui.showMessage(Messages.Error.DUPLICATE_TASK.get() + task);
-            }
+        boolean isDuplicate = tasks.stream()
+                .anyMatch(x -> x.getDescription().equals(task.getDescription()));
+        if (!isDuplicate) {
+            tasks.add(task);
+            storage.saveTasks(tasks);
+            return Messages.Info.TASK_ADDED.get() + "\n" + task;
+        } else {
+            return Messages.Error.DUPLICATE_TASK.get() + task;
         }
     }
     /**
@@ -98,16 +95,19 @@ public class TaskList {
      *
      * @param taskId The ID of the task to mark as complete or incomplete.
      * @param storage The storage system to update the task status.
-     * @param ui The UI used to display messages.
      */
-    public void handleMark(int taskId, Storage storage, Ui ui) {
+    public String handleMark(int taskId, Storage storage) {
         if (!isValidID(taskId)) {
-            ui.showMessage(Messages.Error.INVALID_TASK_INDEX.get());
+            return Messages.Error.INVALID_TASK_INDEX.get();
         } else {
-            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).toggleStatus(ui);
+            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).toggleStatus();
             tasks.set(taskId - INDEX_OFFSET, updatedTask);
             storage.saveTasks(tasks);
-            ui.showMessage(updatedTask.toString());
+            if (updatedTask.getStatus()){
+                return Messages.Info.COMPLETE_TASK.get() + "\n" + updatedTask;
+            } else {
+                return Messages.Info.UNMARK_TASK.get() + "\n" + updatedTask;
+            }
         }
     }
 
@@ -132,9 +132,9 @@ public class TaskList {
      * @param storage The storage system to update the task list.
      * @param ui The UI used to display messages.
      */
-   public void deleteTask(int taskId, Storage storage, Ui ui) {
+   public String deleteTask(int taskId, Storage storage, Ui ui) {
         if (tasks.isEmpty()) {
-            ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
+            return Messages.Error.EMPTY_TASK_LIST.get();
         } else {
             ui.showMessage(Messages.Info.TASK_DELETED.get());
             ui.showMessage(tasks.get(taskId - INDEX_OFFSET).toString());
@@ -142,8 +142,8 @@ public class TaskList {
             for (int i = taskId - INDEX_OFFSET; i < tasks.size(); i++) {
                 tasks.get(i).setId(i + INDEX_OFFSET);
             }
-            ui.showFormattedMessage(Messages.Info.TASK_COUNT, tasks.size());
             storage.saveTasks(tasks);
+            return ui.showFormattedMessage(Messages.Info.TASK_COUNT, tasks.size());
         }
    }
 
@@ -153,41 +153,40 @@ public class TaskList {
      * @param dueDate The due date in the format "d/M/yyyy".
      * @param ui The UI used to display messages.
      */
-   public void listTaskDueOn(String dueDate, Ui ui) {
+   public String listTaskDueOn(String dueDate, Ui ui) {
         if (tasks.isEmpty()) {
-            ui.showMessage(Messages.Error.EMPTY_TASK_LIST.get());
-        } else {
-            boolean hasFound = false;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-            LocalDate filterDate = LocalDate.parse(dueDate, formatter);
-            ui.showFormattedMessage(Messages.Info.TASK_DUE_ON,
-                    filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+            return Messages.Error.EMPTY_TASK_LIST.get();
+        }
 
-            for (Task task : tasks) {
-                if(task.isDueOn(filterDate)) {
-                    hasFound = true;
-                    System.out.println(task);
-                }
-            }
-            if(!hasFound) {
-                ui.showMessage(Messages.Info.NO_TASK_ON.get());
+        StringBuilder output = new StringBuilder();
+        boolean hasFound = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        LocalDate filterDate = LocalDate.parse(dueDate, formatter);
+        output.append(ui.showFormattedMessage(Messages.Info.TASK_DUE_ON,
+                filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")))).append("\n");
+
+        for (Task task : tasks) {
+            if(task.isDueOn(filterDate)) {
+                hasFound = true;
+                output.append(task + "\n");
             }
         }
+
+       return hasFound ? output.toString() : Messages.Info.NO_TASK_ON.get();
    }
 
-   public void findTask(String searchString, Ui ui) {
+   public String findTask(String searchString, Ui ui) {
        boolean hasFound = false;
        int count = 0;
+       StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
             if (task.getDescription().contains(searchString)) {
                 count++;
                 hasFound = true;
-                ui.showMessage(count + task.toString());
+                output.append(count).append(". ").append(task).append("\n");
             }
         }
 
-        if (!hasFound) {
-            ui.showMessage(Messages.Error.NO_TASK_FOUND.get());
-        }
+       return hasFound ? output.toString() : Messages.Error.NO_TASK_FOUND.get();
    }
 }

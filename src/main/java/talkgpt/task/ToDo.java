@@ -52,25 +52,10 @@ public class ToDo extends Task{
     }
 
     @Override
-    public Task toggleStatus(Ui ui) {
+    public Task toggleStatus() {
         boolean newStatus = !super.getStatus();
-        if (newStatus){
-            ui.showMessage(Messages.Info.COMPLETE_TASK.get());
-        } else {
-            ui.showMessage(Messages.Info.UNMARK_TASK.get());
-        }
         return new ToDo(super.getId(), super.getDescription(), newStatus);
 
-    }
-
-    @Override
-    public boolean isValid(Ui ui) {
-        if (super.getDescription().isEmpty()) {
-            System.out.println("Please enter a description.");
-            return false;
-        } else {
-            return true;
-        }
     }
 
     @Override

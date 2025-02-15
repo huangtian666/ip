@@ -73,28 +73,9 @@ public class Deadline extends Task {
     }
 
     @Override
-    public Task toggleStatus(Ui ui) {
+    public Task toggleStatus() {
         boolean newStatus = !this.getStatus();
-        if (newStatus){
-            ui.showMessage(Messages.Info.COMPLETE_TASK.get());
-        } else {
-            ui.showMessage(Messages.Info.UNMARK_TASK.get());
-        }
         return new Deadline(super.getId(), super.getDescription(), newStatus, this.getEnd());
-    }
-
-    @Override
-    public boolean isValid(Ui ui) {
-        if (super.getDescription().isEmpty()) {
-            ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
-            return false;
-        } else if (this.getEnd().isBefore(LocalDateTime.now())) {
-            ui.showMessage("Please enter a valid date after: "
-                    + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm")));
-            return false;
-        } else {
-            return true;
-        }
     }
 
     @Override

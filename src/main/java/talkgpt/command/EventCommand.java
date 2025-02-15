@@ -19,10 +19,9 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
+    public String execute(TaskList list, Storage storage, Ui ui) {
         Task newTask = new Event(list.size() + INDEX_OFFSET, this.description, this.start, this.end);
-        list.addTask(newTask, storage, ui);
-        return false;
+        return list.addTask(newTask, storage, ui);
     }
 
 }

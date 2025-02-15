@@ -6,10 +6,15 @@ import talkgpt.storage.Storage;
 
 public class NextCommand extends Command {
 
-    public NextCommand() {}
+    private final String output;
+
+    public NextCommand(String output) {
+        this.output = output;
+
+    }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return output;
     }
 }

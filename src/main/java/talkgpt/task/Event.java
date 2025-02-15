@@ -33,7 +33,7 @@ public class Event extends Task {
     public Event(int index, String description, String start, String end) {
         super(index, description);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-        this.start = LocalDateTime.parse(end, formatter);
+        this.start = LocalDateTime.parse(start, formatter);
         this.end = LocalDateTime.parse(end, formatter);
     }
 
@@ -78,27 +78,9 @@ public class Event extends Task {
     }
 
     @Override
-    public Task toggleStatus(Ui ui) {
+    public Task toggleStatus() {
         boolean newStatus = !super.getStatus();
-        if (newStatus){
-            ui.showMessage(Messages.Info.COMPLETE_TASK.get());
-        } else {
-            ui.showMessage(Messages.Info.UNMARK_TASK.get());
-        }
         return new Event(super.getId(), super.getDescription(), newStatus, this.getStart(), this.getEnd());
-    }
-
-    @Override
-    public boolean isValid(Ui ui) {
-        if (super.getDescription().isEmpty()) {
-            ui.showMessage(Messages.Warning.EMPTY_DESCRIPTION.get());
-            return false;
-        } else if (this.getEnd().isBefore(this.getStart())) {
-            ui.showMessage(Messages.Error.INVALID_EVENT.name());
-            return false;
-        } else {
-            return true;
-        }
     }
 
     @Override

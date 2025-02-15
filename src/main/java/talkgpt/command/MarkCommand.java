@@ -13,8 +13,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        list.handleMark(this.id, storage, ui);
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return list.handleMark(this.id, storage);
     }
 }

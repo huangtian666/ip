@@ -9,8 +9,7 @@ public class ListCommand extends Command {
     public ListCommand() {}
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        list.listTasks(ui);
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return list.listTasks();
     }
 }

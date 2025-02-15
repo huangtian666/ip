@@ -9,8 +9,7 @@ public class HelpCommand extends Command {
     public HelpCommand() {}
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        ui.printHelp();
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return ui.printHelp();
     }
 }

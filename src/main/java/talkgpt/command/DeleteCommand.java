@@ -13,8 +13,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public boolean execute(TaskList list, Storage storage, Ui ui) {
-        list.deleteTask(this.id, storage, ui);
-        return false;
+    public String execute(TaskList list, Storage storage, Ui ui) {
+        return list.deleteTask(this.id, storage, ui);
     }
 }

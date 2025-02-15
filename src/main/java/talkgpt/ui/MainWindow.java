@@ -36,6 +36,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the talkgpt instance */
     public void setTalkGpt(TalkGPT d) {
         talkgpt = d;
+        dialogContainer.getChildren().add(
+                DialogBox.getGPTDialog(talkgpt.start(), gptImage)
+        );
     }
 
     /**
