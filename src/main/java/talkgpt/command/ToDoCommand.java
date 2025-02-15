@@ -3,6 +3,7 @@ package talkgpt.command;
 import talkgpt.TaskList;
 import talkgpt.storage.Storage;
 import talkgpt.task.*;
+import talkgpt.ui.Messages;
 import talkgpt.ui.Ui;
 
 public class ToDoCommand extends Command {
@@ -16,6 +17,10 @@ public class ToDoCommand extends Command {
 
     @Override
     public String execute(TaskList list, Storage storage, Ui ui) {
+        if (description.isEmpty()) {
+            return Messages.Warning.EMPTY_DESCRIPTION.get();
+        }
+
         Task newTask = new ToDo(list.size() + INDEX_OFFSET, description);
         return list.addTask(newTask, storage, ui);
     }

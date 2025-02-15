@@ -10,6 +10,7 @@ import talkgpt.ui.Ui;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class ToDoCommandTest {
     private TaskList taskList;
     private Storage storage;
@@ -25,9 +26,9 @@ class ToDoCommandTest {
     @Test
     void testExecute_AddsToDoTaskSuccessfully() {
         ToDoCommand command = new ToDoCommand("Finish homework");
-        boolean result = command.execute(taskList, storage, ui);
+        String response = command.execute(taskList, storage, ui);
 
-        assertFalse(result, "execute() should return false");
+        assertNotNull(response, "execute() should return a valid response");
         assertEquals(1, taskList.size(), "TaskList should contain 1 task");
 
         Task addedTask = taskList.getTasks().get(0);
@@ -38,9 +39,9 @@ class ToDoCommandTest {
     @Test
     void testExecute_EmptyDescription() {
         ToDoCommand command = new ToDoCommand("");
-        boolean result = command.execute(taskList, storage, ui);
+        String response = command.execute(taskList, storage, ui);
 
-        assertFalse(result, "execute() should return false");
+        assertNotNull(response, "execute() should return a valid response");
         assertEquals(0, taskList.size(), "Task should NOT be added when description is empty");
     }
 }

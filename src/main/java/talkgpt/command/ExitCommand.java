@@ -23,7 +23,7 @@ public class ExitCommand extends Command {
             Platform.exit();  // Close JavaFX application
             System.exit(0);   // Ensure full termination
         });
-        
+
         return ui.end();
     }
 }
