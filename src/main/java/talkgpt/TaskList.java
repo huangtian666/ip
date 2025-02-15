@@ -162,13 +162,14 @@ public class TaskList {
         boolean hasFound = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         LocalDate filterDate = LocalDate.parse(dueDate, formatter);
-        output.append(ui.showFormattedMessage(Messages.Info.TASK_DUE_ON,
-                filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")))).append("\n");
-
+        output.append(Messages.Info.TASK_DUE_ON.get()).append(filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")))
+                .append("\n");
+        int count  = 0;
         for (Task task : tasks) {
             if(task.isDueOn(filterDate)) {
+                count++;
                 hasFound = true;
-                output.append(task + "\n");
+                output.append(count + ". ").append(task + "\n");
             }
         }
 

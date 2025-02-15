@@ -96,7 +96,7 @@ public class Parser {
             int deleteTaskId = Integer.parseInt(requestArray[1]);
             return new DeleteCommand(deleteTaskId);
 
-        case "list on":
+        case "list_on":
             String dateString = request.substring(DATE_STARTING_INDEX).trim(); // Extract the date string
             return new ListOnCommand(dateString);
 

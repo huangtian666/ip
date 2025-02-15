@@ -68,7 +68,7 @@ public class Ui {
                         "7. delete <taskId> - Delete a task\n" +
                         "8. bye - Exit the application\n" +
                         "9. clear - Clear all tasks\n" +
-                        "10. list on <date> - List tasks due on this date\n" +
+                        "10. list_on <date: dd/mm/yyyy> - List tasks due on this date\n" +
                         "11. help - Print all available commands"
         );
 
