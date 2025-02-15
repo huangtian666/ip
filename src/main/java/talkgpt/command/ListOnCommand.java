@@ -14,6 +14,6 @@ public class ListOnCommand extends Command {
 
     @Override
     public String execute(TaskList list, Storage storage, Ui ui) {
-        return list.listTaskDueOn(this.dueDate, ui);
+        return list.listTaskDueOn(this.dueDate);
     }
 }

@@ -55,11 +55,11 @@ public class TalkGPT {
      */
     public void run() {
         ui.start();
-        String output = "";
+        StringBuilder output = new StringBuilder();
         while (true) {
             String input = ui.getUserInput();
             Command c = Parser.parse(input, this.ui);
-            output += c.execute(this.tasks, this.storage, this.ui);
+            output.append(c.execute(this.tasks, this.storage, this.ui));
         }
     }
 

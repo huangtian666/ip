@@ -81,6 +81,10 @@ public class Parser {
         case "clear":
             return new ClearCommand();
 
+        case "hi":
+        case "hello":
+            return new HelloCommand();
+
         case "mark":
         case "unmark":
             if (requestArray.length < MARK_COMMAND_LENGTH) {

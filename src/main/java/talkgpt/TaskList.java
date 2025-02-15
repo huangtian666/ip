@@ -151,9 +151,8 @@ public class TaskList {
      * Lists all tasks due on a specific date.
      *
      * @param dueDate The due date in the format "d/M/yyyy".
-     * @param ui The UI used to display messages.
      */
-   public String listTaskDueOn(String dueDate, Ui ui) {
+   public String listTaskDueOn(String dueDate) {
         if (tasks.isEmpty()) {
             return Messages.Error.EMPTY_TASK_LIST.get();
         }
