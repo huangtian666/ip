@@ -28,11 +28,11 @@ public class Ui {
 
 
     public String start() {
-        return "Hello! I'm TalkGPT.\nWhat can I do for you?";
+        return "👋 Hello! I'm TalkGPT. What can I do for you?";
     }
 
     public String end() {
-        return "Goodbye! See you next time! \n Window closing in 1 second...";
+        return "👋 Goodbye! See you next time! Window closing in 1 second...";
     }
 
     public String getUserInput() {

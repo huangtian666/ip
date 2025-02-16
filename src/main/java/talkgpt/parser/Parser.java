@@ -140,7 +140,7 @@ public class Parser {
             return new FindCommand(requestArray[1]);
 
         default:
-            return new NextCommand(Messages.Error.INVALID_INSTRUCTION.get());
+            return new NextCommand(Messages.Error.getInvalidInstructionMessage());
         }
     }
 }
