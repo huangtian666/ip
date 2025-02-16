@@ -8,11 +8,15 @@
     -fx-background-color: white;
     -fx-font: 16px "Comic Sans MS";
     -fx-prompt-text-fill: gray;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
 }
 
 .button {
     -fx-background-color: #90bbe8;
     -fx-font: bold 16px "Arial";
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
 }
 
 .button:hover {
