@@ -161,7 +161,8 @@ public class TaskList {
         boolean hasFound = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         LocalDate filterDate = LocalDate.parse(dueDate, formatter);
-        output.append(Messages.Info.TASK_DUE_ON.get()).append(filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")))
+        output.append(Messages.Info.TASK_DUE_ON.get())
+                .append(filterDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")))
                 .append("\n");
         int count  = 0;
         for (Task task : tasks) {
