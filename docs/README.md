@@ -79,5 +79,3 @@ If the chatbot does not respond:
 TalkGPT is designed to **make task management fun and interactive!** 🎉 If you have suggestions or feedback, feel free to improve the chatbot experience!
 
 👋 **Enjoy chatting with TalkGPT!** 🚀
-
-Feature details
