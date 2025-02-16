@@ -67,6 +67,10 @@ public class TalkGPT {
         return ui.start();
     }
 
+    public String end() {
+        return ui.end();
+    }
+
     /**
      * Generates a response for the user's chat message.
      */

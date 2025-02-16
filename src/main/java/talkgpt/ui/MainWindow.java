@@ -1,5 +1,7 @@
 package talkgpt.ui;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import talkgpt.TalkGPT;
 
 /**
@@ -23,6 +26,7 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private TalkGPT talkgpt;
+    private Ui ui;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/shinchan.png"));
     private Image gptImage = new Image(this.getClass().getResourceAsStream("/images/doraemon.png"));
@@ -48,11 +52,32 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        if (input.equals("bye")) {
+            end(input);
+            return;
+        }
         String response = talkgpt.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getGPTDialog(response, gptImage)
         );
         userInput.clear();
+    }
+
+    public void end(String input) {
+        dialogContainer.getChildren().add(
+                DialogBox.getUserDialog(input, userImage)
+        );
+        userInput.clear();
+        dialogContainer.getChildren().add(
+                DialogBox.getGPTDialog(talkgpt.end(), gptImage)
+        );
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> {
+            Platform.exit(); // Close JavaFX application
+            System.exit(0);
+        });
+        delay.play();
     }
 }

@@ -14,20 +14,25 @@ import java.util.Scanner;
  * @version 1.0
  * @since 2025-02-01
  */
-public class Ui {
 
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+
+public class Ui {
     private final Scanner sc;
 
     public Ui() {
         this.sc = new Scanner(System.in);
     }
 
+
     public String start() {
         return "Hello! I'm TalkGPT.\nWhat can I do for you?";
     }
 
     public String end() {
-        return "Goodbye! See you next time!";
+        return "Goodbye! See you next time! \n Window closing in 1 second...";
     }
 
     public String getUserInput() {
