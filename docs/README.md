@@ -6,7 +6,7 @@ Welcome to **TalkGPT**, your interactive chatbot! 🤖💬 This guide will help 
 
 ## 🤩 TalkGPT UI Preview
 <div align="center">
-   <img src="Ui.png" alt="TalkGPT UI" width="300">
+   <img src="Ui.png" alt="TalkGPT UI" width="400">
 </div>
 
 ## 🚀 Getting Started
