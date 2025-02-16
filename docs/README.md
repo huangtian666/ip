@@ -4,7 +4,7 @@
 
 Welcome to **TalkGPT**, your interactive chatbot! 🤖💬 This guide will help you understand how to use TalkGPT, the available commands, and troubleshooting tips.
 
-![TalkGPT](Ui.png)
+![TalkGPT UI](Ui.png)
 
 ## 🚀 Getting Started
 
