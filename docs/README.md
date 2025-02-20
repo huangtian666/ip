@@ -15,7 +15,11 @@ Welcome to **TalkGPT**, your interactive chatbot! 🤖💬 This guide will help 
 
 To start TalkGPT:
 
-1. Open the application. (If using the jar file, start with `java -jar talkgpt.jar`)
+1. Open the application. 
+   - If using the jar file, firstly download the jar file.
+   - Place the file in a folder.
+   - Open the terminal at the folder
+   - Run in terminal - `java -jar talkgpt.jar`
 2. The chatbot will greet you with:
    ```
    👋 Hello! I'm TalkGPT. What can I do for you?
