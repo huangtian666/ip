@@ -136,14 +136,15 @@ public class TaskList {
         if (tasks.isEmpty()) {
             return Messages.Error.EMPTY_TASK_LIST.get();
         } else {
-            ui.showMessage(Messages.Info.TASK_DELETED.get());
-            ui.showMessage(tasks.get(taskId - INDEX_OFFSET).toString());
+            StringBuilder output = new StringBuilder();
+            output.append(Messages.Info.TASK_DELETED.get() + "\n");
+            output.append(tasks.get(taskId - INDEX_OFFSET).toString() + "\n");
             tasks.remove(taskId - INDEX_OFFSET);
             for (int i = taskId - INDEX_OFFSET; i < tasks.size(); i++) {
                 tasks.get(i).setId(i + INDEX_OFFSET);
             }
             storage.saveTasks(tasks);
-            return ui.showFormattedMessage(Messages.Info.TASK_COUNT, tasks.size());
+            return output.append(ui.showFormattedMessage(Messages.Info.TASK_COUNT, tasks.size())).toString();
         }
    }
 
