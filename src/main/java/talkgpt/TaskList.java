@@ -138,7 +138,7 @@ public class TaskList {
         } else {
             StringBuilder output = new StringBuilder();
             output.append(Messages.Info.TASK_DELETED.get() + "\n");
-            output.append(tasks.get(taskId - INDEX_OFFSET).toString() + "\n");
+            output.append(tasks.get(taskId - INDEX_OFFSET).toString() + "\n").append("\n");
             tasks.remove(taskId - INDEX_OFFSET);
             for (int i = taskId - INDEX_OFFSET; i < tasks.size(); i++) {
                 tasks.get(i).setId(i + INDEX_OFFSET);
