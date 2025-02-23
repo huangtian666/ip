@@ -18,6 +18,8 @@ To start TalkGPT:
 1. Open the application. 
    - If using the jar file, firstly download the jar file. 
    - Double-click on the jar file.
+   
+     - Mac users need to go to privacy & security setting to allow the jar file to run if double-clicking the file shows error.
    - Alternatively: 
      - Place the file in a folder.
      - Open the terminal at the folder
