@@ -81,7 +81,8 @@ public class TaskList {
         assert !task.getDescription().trim().isEmpty() : "Task description cannot be empty!";
 
         boolean isDuplicate = tasks.stream()
-                .anyMatch(x -> x.equals(task));
+                .anyMatch(x -> ((x.getDescription().equals(task.getDescription()))
+                        && (x.getClass().equals(task.getClass()))));
         if (!isDuplicate) {
             tasks.add(task);
             storage.saveTasks(tasks);
