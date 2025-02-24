@@ -86,12 +86,18 @@ public class Parser {
             return new HelloCommand();
 
         case "mark":
-        case "unmark":
             if (requestArray.length < MARK_COMMAND_LENGTH) {
                 return new NextCommand(Messages.Warning.EMPTY_TASK_ID.get());
             }
             int taskId = Integer.parseInt(requestArray[1]);
             return new MarkCommand(taskId);
+
+        case "unmark":
+            if (requestArray.length < MARK_COMMAND_LENGTH) {
+                return new NextCommand(Messages.Warning.EMPTY_TASK_ID.get());
+            }
+            taskId = Integer.parseInt(requestArray[1]);
+            return new UnmarkCommand(taskId);
 
         case "delete":
             if (requestArray.length < DELETE_COMMAND_LENGTH) {

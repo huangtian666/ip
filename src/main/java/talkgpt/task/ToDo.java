@@ -52,10 +52,13 @@ public class ToDo extends Task{
     }
 
     @Override
-    public Task toggleStatus() {
-        boolean newStatus = !super.getStatus();
-        return new ToDo(super.getId(), super.getDescription(), newStatus);
+    public Task mark() {
+        return new ToDo(super.getId(), super.getDescription(), true);
+    }
 
+    @Override
+    public Task unmark() {
+        return new ToDo(super.getId(), super.getDescription(), false);
     }
 
     @Override

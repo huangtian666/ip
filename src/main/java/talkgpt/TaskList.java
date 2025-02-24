@@ -81,7 +81,7 @@ public class TaskList {
         assert !task.getDescription().trim().isEmpty() : "Task description cannot be empty!";
 
         boolean isDuplicate = tasks.stream()
-                .anyMatch(x -> x.getDescription().equals(task.getDescription()));
+                .anyMatch(x -> x.equals(task));
         if (!isDuplicate) {
             tasks.add(task);
             storage.saveTasks(tasks);
@@ -91,7 +91,7 @@ public class TaskList {
         }
     }
     /**
-     * Toggles the completion status of a task.
+     * Marks the completion status of a task.
      *
      * @param taskId The ID of the task to mark as complete or incomplete.
      * @param storage The storage system to update the task status.
@@ -99,15 +99,33 @@ public class TaskList {
     public String handleMark(int taskId, Storage storage) {
         if (!isValidID(taskId)) {
             return Messages.Error.INVALID_TASK_INDEX.get();
+        } else if (tasks.get(taskId - INDEX_OFFSET).getStatus()) {
+            return Messages.Error.MARKED_TASK.get();
         } else {
-            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).toggleStatus();
+            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).mark();
             tasks.set(taskId - INDEX_OFFSET, updatedTask);
             storage.saveTasks(tasks);
-            if (updatedTask.getStatus()){
-                return Messages.Info.COMPLETE_TASK.get() + "\n" + updatedTask;
-            } else {
-                return Messages.Info.UNMARK_TASK.get() + "\n" + updatedTask;
-            }
+            return Messages.Info.COMPLETE_TASK.get() + "\n" + updatedTask;
+        }
+    }
+
+
+    /**
+     * Unmarks the completion status of a task.
+     *
+     * @param taskId The ID of the task to mark as complete or incomplete.
+     * @param storage The storage system to update the task status.
+     */
+    public String handleUnMark(int taskId, Storage storage) {
+        if (!isValidID(taskId)) {
+            return Messages.Error.INVALID_TASK_INDEX.get();
+        } else if (!tasks.get(taskId - INDEX_OFFSET).getStatus()) {
+            return Messages.Error.UNMARKED_TASK.get();
+        } else {
+            Task updatedTask = tasks.get(taskId - INDEX_OFFSET).unmark();
+            tasks.set(taskId - INDEX_OFFSET, updatedTask);
+            storage.saveTasks(tasks);
+            return Messages.Info.UNMARK_TASK.get() + "\n" + updatedTask;
         }
     }
 

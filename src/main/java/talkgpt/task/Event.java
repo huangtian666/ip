@@ -78,9 +78,13 @@ public class Event extends Task {
     }
 
     @Override
-    public Task toggleStatus() {
-        boolean newStatus = !super.getStatus();
-        return new Event(super.getId(), super.getDescription(), newStatus, this.getStart(), this.getEnd());
+    public Task mark() {
+        return new Event(super.getId(), super.getDescription(), true, this.getStart(), this.getEnd());
+    }
+
+    @Override
+    public Task unmark() {
+        return new Event(super.getId(), super.getDescription(), false, this.getStart(), this.getEnd());
     }
 
     @Override

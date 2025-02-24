@@ -72,14 +72,24 @@ public abstract class Task {
     public abstract LocalDateTime getEnd();
 
     /**
-     * Toggles the completion status of the task.
+     * Marks a task as done.
      * <p>
      * Concrete subclasses must implement this method to define their own completion behavior.
      * </p>
      *
-     * @return A new {@code Task} instance with the updated status.
+     * @return A new {@code Task} instance with the marked status.
      */
-    public abstract Task toggleStatus();
+    public abstract Task mark();
+
+    /**
+     * Unmarks a task.
+     * <p>
+     * Concrete subclasses must implement this method to define their own completion behavior.
+     * </p>
+     *
+     * @return A new {@code Task} instance with the unmarked status.
+     */
+    public abstract Task unmark();
 
     /**
      * Converts the task into a string format suitable for file storage.

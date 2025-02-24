@@ -73,9 +73,13 @@ public class Deadline extends Task {
     }
 
     @Override
-    public Task toggleStatus() {
-        boolean newStatus = !this.getStatus();
-        return new Deadline(super.getId(), super.getDescription(), newStatus, this.getEnd());
+    public Task mark() {
+        return new Deadline(super.getId(), super.getDescription(), true, this.getEnd());
+    }
+
+    @Override
+    public Task unmark() {
+        return new Deadline(super.getId(), super.getDescription(), false, this.getEnd());
     }
 
     @Override
