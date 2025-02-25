@@ -34,7 +34,7 @@ public class Messages {
         INVALID_TASK("Invalid task! Please enter a valid command."),
         MARKED_TASK("The task is already marked as done!"),
         UNMARKED_TASK("The task is already unmarked!"),
-        WRONG_DEADLINE("The deadline entered needs to be before the current time: " + LocalDateTime.now()),
+        WRONG_DEADLINE("The deadline entered needs to be after the current time: " + LocalDateTime.now()),
         WRONG_START_DATE("The start date entered needs to be before the end date.");
 
         private final String message;
