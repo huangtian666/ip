@@ -20,10 +20,14 @@ To start TalkGPT:
    - Double-click on the jar file.
    
      - Mac users need to go to privacy & security setting to allow the jar file to run if double-clicking the file shows error.
-   - Alternatively: 
-     - Place the file in a folder.
-     - Open the terminal at the folder
-     - Run in terminal - `java -jar talkgpt.jar`
+     - Alternatively: 
+       - Place the file in a folder.
+       - Open the terminal at the folder
+       - Run in terminal: 
+       ```
+       java -jar talkgpt.jar
+       ```
+     
 2. The chatbot will greet you with:
    ```
    👋 Hello! I'm TalkGPT. What can I do for you?
